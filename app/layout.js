@@ -23,9 +23,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.variable} ${exo.variable} font-inter bg-white`}
       >
-        <Navbar></Navbar>
         {children}
-        <Footer></Footer>
       </body>
     </html>
   );
