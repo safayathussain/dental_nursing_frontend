@@ -1,13 +1,9 @@
 import React from "react";
-import Button from "../../Button";
 
-const Blogs = () => {
+const FeatureCourses = () => {
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h1 className="text-4xl text-primary font-bold">Featured Blogs</h1>
-        <Button>View All Blogs</Button>
-      </div>
+      <h1 className="text-3xl text-primary font-bold">Featured Courses</h1>
       <div className="grid grid-cols-3 my-5">
         <div className="rounded-xl shadow-lg">
           <div className="aspect-w-16 aspect-h-9 overflow-hidden ">
@@ -33,4 +29,4 @@ const Blogs = () => {
   );
 };
 
-export default Blogs;
+export default FeatureCourses;

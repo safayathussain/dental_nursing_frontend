@@ -4,8 +4,8 @@ import Image from "next/image";
 import profile from "@/public/profile.png";
 import Link from "next/link";
 import sdnBanner from "@/public/images/sdn_ad_banner.png";
-import Blogs from "./Blogs";
-import Courses from "./Courses";
+import FeatureBlogs from "./FeatureBlogs";
+import FeatureCourses from "./FeatureCourses";
 import JoinSection from "../common/JoinSection";
 const HomePageQuestions = () => {
   return (
@@ -126,9 +126,9 @@ const HomePageQuestions = () => {
         <div className="my-10">
           <Image src={sdnBanner} alt=""></Image>
         </div>
-      <Courses />
+      <FeatureCourses />
       <div className="h-10"></div>
-      <Blogs />
+      <FeatureBlogs />
       </div>
       <div className="h-10"></div>
       <JoinSection />
