@@ -12,9 +12,11 @@ module.exports = {
         secondary: '#1BB68A',
         'secondary-mid': '#E8F8F3',
         'secondary-low': '#F1FBF8',
-
+'lightGray': '#4B5563'
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
 };

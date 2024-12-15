@@ -17,10 +17,12 @@ const Button = ({
       variantClassName = "bg-secondary text-white ";
       break;
     case "secondary":
-      variantClassName = "border border-[#3C55A51A] bg-secondary-low text-primary ";
+      variantClassName =
+        "border border-[#3C55A51A] bg-secondary-low text-primary ";
       break;
     case "primary-outline":
-      variantClassName = "border border-white bg-primary hover:bg-white hover:text-primary duration-300 text-white ";
+      variantClassName =
+        "border border-white bg-primary hover:bg-white hover:text-primary duration-300 text-white ";
       break;
   }
   switch (size) {
@@ -29,6 +31,9 @@ const Button = ({
       break;
     case "md":
       sizeClassName = "px-5 py-1.5 rounded-[8px] font-semibold";
+      break;
+    case "lg":
+      sizeClassName = "px-6 py-2 rounded-[8px] font-semibold";
       break;
   }
 
