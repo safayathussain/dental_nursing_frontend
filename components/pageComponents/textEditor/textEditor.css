@@ -1,0 +1,129 @@
+
+.jodit-editor h1 {
+    font-size: 2rem; /* Size of the h1 text */
+    font-weight: bold; /* Bold for h1 */
+    color: #333; /* Text color */
+    margin-bottom: 1rem;
+  }
+  
+  .jodit-editor h2 {
+    font-size: 1.75rem; /* Size of h2 text */
+    font-weight: semi-bold;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .jodit-editor h3 {
+    font-size: 1.5rem; /* Size of h3 text */
+    font-weight: medium;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .jodit-editor p {
+    font-size: 1rem; /* Standard paragraph text size */
+    line-height: 1.5; /* Comfortable line height */
+    margin-bottom: 1rem;
+    color: #333; /* Paragraph text color */
+  }
+  
+  .jodit-editor a {
+    color: #1a73e8; /* Link color */
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .jodit-editor a:hover {
+    color: #0c5f98; /* Darker link color on hover */
+  }
+  
+  .jodit-editor ul,
+  .jodit-editor ol {
+    margin-left: 20px;
+    list-style-type: disc;
+  }
+  
+  .jodit-editor li {
+    font-size: 1rem; /* List item size */
+    margin-bottom: 0.5rem;
+  }
+  
+  .jodit-editor blockquote {
+    font-size: 1.25rem; /* Quote text size */
+    font-style: italic;
+    border-left: 5px solid #ddd; /* Border on the left */
+    padding-left: 10px;
+    margin-bottom: 1rem;
+    color: #666;
+  }
+  
+  .jodit-editor code {
+    font-size: 0.875rem; /* Smaller font size for code */
+    background-color: #f5f5f5;
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  
+  .jodit-editor hr {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin: 1rem 0;
+  }
+  
+  /* Styling the toolbar (buttons) */
+  .jodit-toolbar {
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
+    background-color: #f8f8f8;
+  }
+  
+  .jodit-toolbar button {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .jodit-toolbar button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .jodit-toolbar button:active {
+    background-color: #e0e0e0;
+  }
+  
+  /* Scrollbar styling */
+  .jodit-editor::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .jodit-editor::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }
+  
+  .jodit-editor::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
+  .jodit-ui-button {
+    background-color: #1bb68a !important;
+    color: white !important;
+    border-radius: 8px !important;
+  }
+  .jodit-ui-input_focused_true .jodit-ui-input__wrapper {
+    border: 1px solid #dadada !important;
+  }
+  .jodit-ui-input__wrapper {
+    border-radius: 6px !important;
+  }
+  .jodit-ui-input__wrapper > input {
+    border-radius: 6px !important;
+  }
+  .jodit-ui-block__className,
+  .jodit-ui-form__target,
+  .jodit-ui-form__nofollow {
+    display: none !important;
+  }
+  

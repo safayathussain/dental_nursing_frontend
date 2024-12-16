@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${exo.variable} font-inter bg-white`}
+        className={`${inter.variable} ${exo.variable} font-inter bg-white overflow-x-hidden`}
       >
         {children}
       </body>

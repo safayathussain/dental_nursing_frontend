@@ -2,10 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
-  --font-inter: 'Inter', sans-serif;
-  --font-exo: 'Exo', sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-exo: "Exo", sans-serif;
 }
 
 body {
@@ -13,12 +12,13 @@ body {
 }
 
 /* Example for headings using Exo */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-exo);
 }
 @layer components {
   .container {
-    @apply max-w-[1440px] mx-auto px-5 md:px-5 lg:px-12 2xl:px-16
+    @apply max-w-[1440px] mx-auto px-5 md:px-5 lg:px-12 2xl:px-16;
   }
-
 }

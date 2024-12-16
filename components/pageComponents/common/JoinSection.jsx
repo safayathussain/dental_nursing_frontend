@@ -5,11 +5,8 @@ const JoinSection = () => {
   return (
     <div className="bg-secondary-mid py-20">
       <div className="container flex flex-col items-center">
-        <h1 className="text-5xl font-bold text-primary text-center">
-          Join us to learn, grow,
-        </h1>
-        <h1 className="text-5xl font-bold text-primary text-center mt-1">
-          and thrive together!
+        <h1 className="text-4xl md:text-5xl font-bold text-primary text-center max-w-[400px] sm:w-[500px]">
+          Join us to learn, grow, and thrive together!
         </h1>
         <div className="max-w-[600px]">
           <p className=" text-center my-4 text-lightGray">

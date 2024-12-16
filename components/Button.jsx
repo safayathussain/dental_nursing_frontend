@@ -16,6 +16,9 @@ const Button = ({
     case "primary":
       variantClassName = "bg-secondary text-white ";
       break;
+    case "primary-blue":
+      variantClassName = "bg-primary text-white ";
+      break;
     case "secondary":
       variantClassName =
         "border border-[#3C55A51A] bg-secondary-low text-primary ";

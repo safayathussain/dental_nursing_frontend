@@ -16,7 +16,7 @@ const Footer = () => {
           <Image src={logo} className="w-[150px] lg:w-[200px] pt-10" alt=""></Image>
         </div>
         <hr className="my-5 w-full opacity-20" />
-        <div className="w-full flex justify-between">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
           <div className="flex flex-col space-y-1 ">
             <p className="font-medium text-xl">Quick Links</p>
             <Link href={""} className="font-light hover:underline duration-300">

@@ -5,7 +5,11 @@ import logo from "@/public/logo.svg";
 import Button from "./Button";
 import TextInputWithBtn from "./TextInputWithBtn";
 import { useRouter } from "next/navigation";
-const Navbar = ({ setShowAddQuesModal }) => {
+const Navbar = ({
+  setShowAddQuesModal,
+  setShowLoginModal,
+  setShowRegisterModal,
+}) => {
   const router = useRouter();
   const [searchInputValue, setSearchInputValue] = useState("");
   return (
@@ -40,12 +44,21 @@ const Navbar = ({ setShowAddQuesModal }) => {
           />
         </div>
         <div className="flex items-center gap-3 !font-normal">
-          <Button variant="primary-outline" className={"!font-normal"}>
+          <Button
+            variant="primary-outline"
+            className={"!font-normal"}
+            onClick={() => {
+              setShowLoginModal(true);
+            }}
+          >
             Sign in
           </Button>
           <Button
             variant="primary-outline"
             className={"!font-normal hidden md:block"}
+            onClick={() => {
+              setShowRegisterModal(true);
+            }}
           >
             Sign up
           </Button>
