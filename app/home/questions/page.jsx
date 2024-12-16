@@ -1,8 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import profile from "@/public/profile.png";
-import FeatureBlogs from "../components/pageComponents/home/FeatureBlogs";
-import FeatureCourses from "../components/pageComponents/home/FeatureCourses";
+import FeatureCourses from "@/components/pageComponents/home/FeatureCourses";
 
 const page = () => {
   return (

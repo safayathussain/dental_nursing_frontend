@@ -1,23 +1,22 @@
-'use client'
+"use client";
 import Image from "next/image";
 import React, { useState } from "react";
 import logo from "@/public/logo.svg";
 import Button from "./Button";
 import TextInputWithBtn from "./TextInputWithBtn";
 import { useRouter } from "next/navigation";
-const Navbar = () => {
+const Navbar = ({ setShowAddQuesModal }) => {
   const router = useRouter();
-  const [searchInputValue, setSearchInputValue] = useState('')
+  const [searchInputValue, setSearchInputValue] = useState("");
   return (
     <div className="bg-primary ">
       <div className="container py-7 flex gap-5 justify-between items-center">
         <Image src={logo} className="w-[150px] lg:w-[200px]" alt=""></Image>
         <div className="w-full hidden md:block">
           <TextInputWithBtn
-          onClick={() => {
-            console.log('hi')
-            router.push(`/questions?search=${searchInputValue}`)
-          }}
+            onClick={() => {
+              router.push(`/home/questions?search=${searchInputValue}`);
+            }}
             placeholder={"Search Dental Nursing Guide"}
             onChange={(e) => setSearchInputValue(e.target.value)}
             buttonChild={
@@ -38,7 +37,6 @@ const Navbar = () => {
                 </svg>
               </div>
             }
-            
           />
         </div>
         <div className="flex items-center gap-3 !font-normal">
@@ -51,7 +49,11 @@ const Navbar = () => {
           >
             Sign up
           </Button>
-          <Button variant="primary" className={"!font-normal"}>
+          <Button
+            variant="primary"
+            className={"!font-normal"}
+            onClick={() => setShowAddQuesModal(true)}
+          >
             <div className="flex items-center gap-1 py-[1px]">
               <svg
                 width="15"
