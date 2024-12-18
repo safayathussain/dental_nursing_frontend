@@ -9,10 +9,12 @@ import FeatureBlogs from "./FeatureBlogs";
 import FeatureCourses from "./FeatureCourses";
 import JoinSection from "../common/JoinSection";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 const TextEditor = dynamic(() => import('../../textEditor/TextEditor'), {
   ssr: false,  // Disable SSR for this component
 });
 const HomePageQuestions = () => {
+  const router = useRouter()
   return (
     <div className=" pt-20 text-sm xl:text-base">
       {/* <TextEditor/> */}
@@ -53,7 +55,7 @@ const HomePageQuestions = () => {
                 <tbody className="text-sm xl:text-base">
                   <tr>
 
-                  <td className="flex flex-col lg:flex-row items-start gap-2 lg:gap-7 lg:items-center w-full justify-between bg-secondary-low p-5  rounded-xl border-2 border-secondary-mid">
+                  <td onClick={() => router.push('/home/questions/1')} className="flex cursor-pointer flex-col lg:flex-row items-start gap-2 lg:gap-7 lg:items-center w-full justify-between bg-secondary-low p-5  rounded-xl border-2 border-secondary-mid">
                     <div className="flex items-center gap-5 w-full ">
                       <div className="lg:size-16 rounded-full overflow-hidden min-w-12 lg:min-w-16 size-12 flex items-center justify-center">
                         <Image

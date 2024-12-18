@@ -1,19 +1,25 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import profile from "@/public/profile.png";
 import FeatureCourses from "@/components/pageComponents/home/FeatureCourses";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
   return (
     <div className="container py-20 ">
       <div className="flex gap-8">
         <div className="w-3/4">
           <p className="text-[24px] text-primary">
             <span className="font-bold">100</span> Results for{" "}
-            <span className="font-bold">"Collage"</span>
+            <span className="font-bold">{`"Collage"`}</span>
           </p>
           <hr className="my-4" />
-          <div className="flex items-center mb-10 w-full justify-between bg-secondary-low p-5 rounded-xl border-2 border-secondary-mid">
+          <div
+            onClick={() => router.push("/home/questions/1")}
+            className="cursor-pointer flex items-center mb-10 w-full justify-between bg-secondary-low p-5 rounded-xl border-2 border-secondary-mid"
+          >
             <div className="flex items-center gap-10">
               <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center">
                 <Image
@@ -49,11 +55,14 @@ const Page = () => {
           </div>
           <FeatureCourses />
         </div>
-        <div className="w-1/4 border rounded-xl p-4">
+        <div className="w-1/4 border h-max rounded-xl p-4">
           <h1 className="text-[24px] text-primary font-bold">Featured Blogs</h1>
           <hr className="my-3" />
           <div>
-            <div className="rounded-xl shadow-lg">
+            <div
+              onClick={() => router.push("/home/blogs/1")}
+              className="rounded-xl shadow-lg cursor-pointer"
+            >
               <div className="aspect-w-16 aspect-h-9 overflow-hidden ">
                 <img
                   src="https://i.ibb.co.com/mJjRm5y/Thumbnail-1.png"

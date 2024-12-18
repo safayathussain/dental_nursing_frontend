@@ -1,6 +1,9 @@
+"use client"
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const SingleQuestionRecommendation = ({ title }) => {
+  const router = useRouter()
   return (
     <div>
       <div className="p-4 rounded-xl border border-secondary-mid space-y-3">
@@ -10,7 +13,7 @@ const SingleQuestionRecommendation = ({ title }) => {
             <hr className="my-3" />
           </>
         )}
-        <div className="p-3 border bg-secondary-low rounded-xl  border-secondary-mid">
+        <div onClick={() => router.push("/home/blogs/1")} className="cursor-pointer p-3 border bg-secondary-low rounded-xl  border-secondary-mid">
           <p className="text-lightGray text-sm">14 minutes ago</p>
           <p className="text-primary text-lg font-semibold my-1">
             Lorem ipsum dolor sit amet consectetur.
@@ -29,7 +32,7 @@ const SingleQuestionRecommendation = ({ title }) => {
             </div>
           </div>
         </div>
-        <div className="p-3 border bg-secondary-low rounded-xl  border-secondary-mid">
+        <div onClick={() => router.push("/home/blogs/1")} className="cursor-pointer p-3 border bg-secondary-low rounded-xl  border-secondary-mid">
           <p className="text-lightGray text-sm">14 minutes ago</p>
           <p className="text-primary text-lg font-semibold my-1">
             Lorem ipsum dolor sit amet consectetur.

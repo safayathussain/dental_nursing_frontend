@@ -27,7 +27,7 @@ const Page = () => {
             <hr className="my-3" />
             <div className="p-3 sm:p-4 rounded-xl bg-secondary-low border border-secondary-mid">
               <p className="text-primary text-xl md:text-2xl font-semibold">
-                L'OREAL 2025 grad scheme
+                {"L'OREAL 2025 grad scheme"}
               </p>
               <p className="text-secondary text-sm md:text-base">
                 Webmaster, coding and software dev

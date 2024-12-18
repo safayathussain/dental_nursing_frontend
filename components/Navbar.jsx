@@ -5,6 +5,7 @@ import logo from "@/public/logo.svg";
 import Button from "./Button";
 import TextInputWithBtn from "./TextInputWithBtn";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 const Navbar = ({
   setShowAddQuesModal,
   setShowLoginModal,
@@ -15,7 +16,8 @@ const Navbar = ({
   return (
     <div className="bg-primary ">
       <div className="container py-7 flex gap-5 justify-between items-center">
-        <Image src={logo} className="w-[150px] lg:w-[200px]" alt=""></Image>
+          <Image src={logo} className="w-[150px] lg:w-[200px] cursor-pointer" onClick={() => router.push('/home')} alt=""></Image>
+      
         <div className="w-full hidden md:block">
           <TextInputWithBtn
             onClick={() => {

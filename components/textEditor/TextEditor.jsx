@@ -1,18 +1,15 @@
 "use client";
+
 import React, { useState, useRef, useMemo, useEffect } from "react";
-import JoditEditor from "jodit-react";
-import './textEditor.css'
+import dynamic from "next/dynamic";
+import './textEditor.css';
+
+// Dynamically import JoditEditor
+const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
+
 const TextEditor = ({ placeholder, className }) => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
-
-  // Add useEffect to ensure that the editor component only runs client-side
-  useEffect(() => {
-    // This will run only on the client side
-    if (typeof window !== "undefined") {
-      // Your logic that requires access to `window` or `self`
-    }
-  }, []); // Empty dependency array to run only on mount
 
   const config = useMemo(
     () => ({
@@ -35,13 +32,13 @@ const TextEditor = ({ placeholder, className }) => {
 
   return (
     <JoditEditor
-    className={`jodit-editor ${className}`}
+      className={`jodit-editor ${className}`}
       ref={editor}
       value={content}
       config={config}
       tabIndex={1}
       onBlur={(newContent) => setContent(newContent)}
-      onChange={(newContent) => {console.log(newContent)}}
+      onChange={(newContent) => console.log(newContent)}
     />
   );
 };
