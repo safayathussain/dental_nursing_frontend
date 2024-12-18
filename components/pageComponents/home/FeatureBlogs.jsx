@@ -5,8 +5,8 @@ const FeatureBlogs = () => {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl text-primary font-bold">Featured Blogs</h1>
-        <Button className={'hidden lg:block'}>View All Blogs</Button>
+        <h1 className="text-2xl md:text-3xl text-primary font-bold">Featured Blogs</h1>
+        <Button className={"hidden lg:block"}>View All Blogs</Button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 my-5">
         <div className="rounded-xl shadow-lg">
@@ -18,7 +18,7 @@ const FeatureBlogs = () => {
             />
           </div>
           <div className="p-4">
-            <p className="text-2xl text-primary font-semibold">
+            <p className="text-xl md:text-2xl text-primary font-semibold">
               GCSE biology combined science AQA 2024 - Dental Nursing
             </p>
             <p className="text-[#4B5563]">
@@ -37,7 +37,7 @@ const FeatureBlogs = () => {
             />
           </div>
           <div className="p-4">
-            <p className="text-2xl text-primary font-semibold">
+            <p className="text-xl md:text-2xl text-primary font-semibold">
               GCSE biology combined science AQA 2024 - Dental Nursing
             </p>
             <p className="text-[#4B5563]">
@@ -56,7 +56,7 @@ const FeatureBlogs = () => {
             />
           </div>
           <div className="p-4">
-            <p className="text-2xl text-primary font-semibold">
+            <p className="text-xl md:text-2xl text-primary font-semibold">
               GCSE biology combined science AQA 2024 - Dental Nursing
             </p>
             <p className="text-[#4B5563]">
@@ -67,8 +67,7 @@ const FeatureBlogs = () => {
           </div>
         </div>
       </div>
-      <Button className={'block mx-auto lg:hidden'}>View All Blogs</Button>
-
+      <Button className={"block mx-auto lg:hidden"}>View All Blogs</Button>
     </div>
   );
 };

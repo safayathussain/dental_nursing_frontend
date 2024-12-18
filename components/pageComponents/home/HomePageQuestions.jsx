@@ -9,7 +9,7 @@ import FeatureBlogs from "./FeatureBlogs";
 import FeatureCourses from "./FeatureCourses";
 import JoinSection from "../common/JoinSection";
 import dynamic from "next/dynamic";
-const TextEditor = dynamic(() => import('../textEditor/TextEditor'), {
+const TextEditor = dynamic(() => import('../../textEditor/TextEditor'), {
   ssr: false,  // Disable SSR for this component
 });
 const HomePageQuestions = () => {

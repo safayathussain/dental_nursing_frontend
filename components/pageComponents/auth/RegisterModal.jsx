@@ -8,8 +8,8 @@ import Button from "@/components/Button";
 import { CgClose } from "react-icons/cg";
 const RegisterModal = ({ setOpen, setShowLoginModal }) => {
   return (
-    <Modal setOpen={setOpen} className={"max-w-[400px] w-[90vw] rounded-none p-0 relative"}>
-      <div className="bg-secondary flex flex-col items-center py-5">
+    <Modal setOpen={setOpen} className={"max-w-[400px] w-[90vw] rounded-none !p-0  relative"}>
+      <div className="bg-secondary flex flex-col items-center py-5 !rounded-t-xl">
         <Image src={logo} alt="" className="h-12" />
         <p className="text-white mt-4 text-lg">Sign up to Ask a Question</p>
         <CgClose

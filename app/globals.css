@@ -19,6 +19,37 @@ h3 {
 }
 @layer components {
   .container {
-    @apply max-w-[1440px] mx-auto px-5 md:px-5 lg:px-12 2xl:px-16;
+    @apply max-w-[1440px] mx-auto px-3 md:px-5 lg:px-12 2xl:px-16;
   }
+}
+
+.p-dropdown-label {
+  padding: 9px !important;
+}
+.p-placeholder {
+  color: #a1a1a1 !important;
+}
+.p-dropdown-item.p-highlight {
+  background-color: #f5f7fb;
+  color: #3c55a5;
+}
+.p-highlight > .p-checkbox-box {
+  background-color: #3c55a5 !important;
+}
+.p-radiobutton-input{
+  background-color: #3c55a5 !important;
+}
+input[type="radio"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked {
+  background-color: #3c55a5 !important; /* Change to your desired active color */
+  border-color: #a1a1a1 !important;
 }

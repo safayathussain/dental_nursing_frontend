@@ -5,7 +5,7 @@ import { CgClose } from "react-icons/cg";
 import { FaCheck, FaPlus } from "react-icons/fa6";
 import Button from "../../Button";
 import Modal from "@/components/Modal";
-import TextEditor from "@/components/pageComponents/textEditor/TextEditor";
+import TextEditor from "@/components/textEditor/TextEditor";
 
 const AddQuestionModal = ({ open, setOpen }) => {
   return (

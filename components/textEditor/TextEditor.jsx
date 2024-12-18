@@ -2,7 +2,7 @@
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import './textEditor.css'
-const TextEditor = ({ placeholder }) => {
+const TextEditor = ({ placeholder, className }) => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
 
@@ -35,7 +35,7 @@ const TextEditor = ({ placeholder }) => {
 
   return (
     <JoditEditor
-    className="jodit-editor"
+    className={`jodit-editor ${className}`}
       ref={editor}
       value={content}
       config={config}
