@@ -1,14 +1,14 @@
 import "./globals.css";
-import { Inter, Exo } from '@next/font/google';
+import { Inter, Exo } from "next/font/google";
 
 const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter', // Optional: Define a CSS variable
+  subsets: ["latin"],
+  variable: "--font-inter", // Optional: Define a CSS variable
 });
 
 const exo = Exo({
-  subsets: ['latin'],
-  variable: '--font-exo', // Optional: Define a CSS variable
+  subsets: ["latin"],
+  variable: "--font-exo", // Optional: Define a CSS variable
 });
 export const metadata = {
   title: "Create Next App",

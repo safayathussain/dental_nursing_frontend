@@ -10,6 +10,7 @@ import SelectInput from "@/components/SelectInput";
 import TextArea from "@/components/TextArea";
 import CheckInput from "@/components/CheckInput";
 import RadioInput from "@/components/RadioInput";
+import JoinSection from "@/components/pageComponents/common/JoinSection";
 const page = () => {
   return (
     <div>
@@ -18,8 +19,8 @@ const page = () => {
           Contact Us
         </h1>
       </div>
-      <div className="container flex py-20">
-        <div className="bg-primary p-10 rounded-l-xl w-1/2 flex flex-col justify-between">
+      <div className="container flex py-20 flex-col-reverse md:flex-row">
+        <div className="bg-primary p-5 sm:p-10 rounded-b-xl md:rounded-b-none md:!rounded-l-xl w-full md:w-1/2 flex flex-col justify-between gap-10">
           <div>
             <Image src={logo} alt=""></Image>
           </div>
@@ -47,7 +48,7 @@ const page = () => {
             </Link>
           </div>
         </div>
-        <div className="border border-primary rounded-r-xl w-1/2 p-10 space-y-3">
+        <div className="border border-primary rounded-t-xl md:!rounded-r-xl md:rounded-l-none w-full md:w-1/2 p-5 sm:p-10 space-y-3">
           <TextInput placeholder={"Name*"} />
           <TextInput placeholder={"Email Address*"} />
           <TextInput placeholder={"Phone Number*"} />
@@ -61,10 +62,17 @@ const page = () => {
               "Yes, I agree to the processing of my personal data in line with the schools' privacy policy"
             }
           />
-          <div className="flex items-center gap-5 mt-5">
-            Contact me:* <RadioInput label={'By phone'} name={'contactBy'}/> <RadioInput label={'By email'} name={'contactBy'}/>
+          <div className="flex items-center gap-5 mt-5 whitespace-nowrap flex-wrap">
+            Contact me:*{" "}
+            <div className="flex gap-5">
+              <RadioInput label={"By phone"} name={"contactBy"} />{" "}
+              <RadioInput label={"By email"} name={"contactBy"} />
+            </div>
           </div>
         </div>
+      </div>
+      <div>
+        <JoinSection />
       </div>
     </div>
   );
