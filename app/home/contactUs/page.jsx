@@ -11,7 +11,7 @@ import TextArea from "@/components/TextArea";
 import CheckInput from "@/components/CheckInput";
 import RadioInput from "@/components/RadioInput";
 import JoinSection from "@/components/pageComponents/common/JoinSection";
-const page = () => {
+const Page = () => {
   return (
     <div>
       <div className="bg-secondary-low">
@@ -78,4 +78,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

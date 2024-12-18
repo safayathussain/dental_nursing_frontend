@@ -1,7 +1,7 @@
 import Button from "@/components/Button";
 import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
     <div>
       <div className="bg-secondary-low">
@@ -113,4 +113,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

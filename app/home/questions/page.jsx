@@ -3,7 +3,7 @@ import React from "react";
 import profile from "@/public/profile.png";
 import FeatureCourses from "@/components/pageComponents/home/FeatureCourses";
 
-const page = () => {
+const Page = () => {
   return (
     <div className="container py-20 ">
       <div className="flex gap-8">
@@ -74,4 +74,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

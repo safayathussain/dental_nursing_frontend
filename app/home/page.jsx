@@ -2,7 +2,7 @@ import HeroSection from '@/components/pageComponents/home/HeroSection'
 import HomePageQuestions from '@/components/pageComponents/home/HomePageQuestions'
 import React from 'react'
 
-const page = () => {
+const Page = () => {
   return (
     <div>
       <HeroSection/>
@@ -11,4 +11,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

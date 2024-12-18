@@ -6,7 +6,7 @@ import RegisterModal from "@/components/pageComponents/auth/RegisterModal";
 import AddQuestionModal from "@/components/pageComponents/common/AddQuestionModal";
 import React, { useState } from "react";
 
-const layout = ({ children,  }) => {
+const Layout = ({ children,  }) => {
   const [showAddQuesModal, setShowAddQuesModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -40,4 +40,4 @@ const layout = ({ children,  }) => {
   );
 };
 
-export default layout;
+export default Layout;

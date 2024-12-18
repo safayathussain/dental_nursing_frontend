@@ -12,7 +12,7 @@ import JoinSection from "@/components/pageComponents/common/JoinSection";
 import TextEditor from "@/components/textEditor/TextEditor";
 import { QuestionComments } from "@/components/pageComponents/questions/QuestionComments";
 
-const page = () => {
+const Page = () => {
   const [showReplyEditor, setShowReplyEditor] = useState(false);
   return (
     <div className=" ">
@@ -122,4 +122,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

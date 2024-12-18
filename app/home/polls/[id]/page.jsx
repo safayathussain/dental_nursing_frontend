@@ -12,8 +12,7 @@ import JoinSection from "@/components/pageComponents/common/JoinSection";
 import TextEditor from "@/components/textEditor/TextEditor";
 import { QuestionComments } from "@/components/pageComponents/questions/QuestionComments";
 
-const page = () => {
-  const [showReplyEditor, setShowReplyEditor] = useState(false);
+const Page = () => {
   return (
     <div className=" ">
       <div className=" py-10 lg:py-20 container">
@@ -67,4 +66,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
