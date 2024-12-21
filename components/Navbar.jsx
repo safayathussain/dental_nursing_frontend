@@ -6,6 +6,10 @@ import Button from "./Button";
 import TextInputWithBtn from "./TextInputWithBtn";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "@/utils/functions";
+import { useDispatch } from "react-redux";
+import { setAuth } from "@/redux/slices/AuthSlice";
+import Profile from "./Profile";
 const Navbar = ({
   setShowAddQuesModal,
   setShowLoginModal,
@@ -13,11 +17,18 @@ const Navbar = ({
 }) => {
   const router = useRouter();
   const [searchInputValue, setSearchInputValue] = useState("");
+  const { auth } = useAuth();
+  const dispatch = useDispatch();
   return (
     <div className="bg-primary ">
       <div className="container py-7 flex gap-5 justify-between items-center">
-          <Image src={logo} className="w-[150px] lg:w-[200px] cursor-pointer" onClick={() => router.push('/home')} alt=""></Image>
-      
+        <Image
+          src={logo}
+          className="w-[150px] lg:w-[200px] cursor-pointer"
+          onClick={() => router.push("/home")}
+          alt=""
+        ></Image>
+
         <div className="w-full hidden md:block">
           <TextInputWithBtn
             onClick={() => {
@@ -45,25 +56,43 @@ const Navbar = ({
             }
           />
         </div>
-        <div className="flex items-center gap-3 !font-normal">
-          <Button
-            variant="primary-outline"
-            className={"!font-normal"}
-            onClick={() => {
-              setShowLoginModal(true);
-            }}
-          >
-            Sign in
-          </Button>
-          <Button
-            variant="primary-outline"
-            className={"!font-normal hidden md:block"}
-            onClick={() => {
-              setShowRegisterModal(true);
-            }}
-          >
-            Sign up
-          </Button>
+        <div className="flex  items-center gap-3 !font-normal">
+          {!auth?._id ? (
+            <>
+              <Button
+                variant="primary-outline"
+                className={"!font-normal"}
+                onClick={() => {
+                  setShowLoginModal(true);
+                }}
+              >
+                Sign in
+              </Button>
+              <Button
+                variant="primary-outline"
+                className={"!font-normal hidden md:block"}
+                onClick={() => {
+                  setShowRegisterModal(true);
+                }}
+              >
+                Sign up
+              </Button>
+            </>
+          ) : (
+            <>
+             <Profile imgUrl={auth?.profilePicture}/>
+              <div className=""></div>
+              <Button
+                variant="primary-outline"
+                className={"!font-normal hidden md:block"}
+                onClick={() => {
+                  dispatch(setAuth({}));
+                }}
+              >
+                Logout
+              </Button>
+            </>
+          )}
           <Button
             variant="primary"
             className={"!font-normal"}

@@ -1,3 +1,4 @@
+import Providers from "@/components/Providers";
 import "./globals.css";
 import { Inter, Exo } from "next/font/google";
 
@@ -21,7 +22,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.variable} ${exo.variable} font-inter bg-white overflow-x-hidden`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

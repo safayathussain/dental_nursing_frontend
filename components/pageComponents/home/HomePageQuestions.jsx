@@ -8,17 +8,11 @@ import sdnBanner from "@/public/images/sdn_ad_banner.png";
 import FeatureBlogs from "./FeatureBlogs";
 import FeatureCourses from "./FeatureCourses";
 import JoinSection from "../common/JoinSection";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-const TextEditor = dynamic(() => import('../../textEditor/TextEditor'), {
-  ssr: false,  // Disable SSR for this component
-});
 const HomePageQuestions = () => {
   const router = useRouter()
   return (
     <div className=" pt-20 text-sm xl:text-base">
-      {/* <TextEditor/> */}
-
       <div className="container">
         <div className="flex flex-col xl:flex-row gap-8 w-full">
           <div className="xl:w-2/3 w-full">

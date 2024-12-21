@@ -9,14 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "axios": "^1.7.9",
+    "firebase": "^11.1.0",
     "jodit": "^4.2.47",
     "jodit-react": "^4.1.2",
     "next": "15.0.4",
     "primereact": "^10.8.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.4.1",
     "react-icons": "^5.4.0",
+    "react-redux": "^9.2.0",
+    "redux-persist": "^6.0.0",
     "rsuite": "^5.75.0"
   },
   "devDependencies": {
