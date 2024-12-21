@@ -1,7 +1,7 @@
-import 'rsuite/Loader/styles/index.css';
+import "rsuite/Loader/styles/index.css";
 import Modal from "@/components/Modal";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "@/public/logo.svg";
 import googleSvg from "@/public/icons/google.svg";
 import TextInput from "@/components/TextInput";
@@ -66,7 +66,7 @@ const RegisterModal = ({ setOpen, setShowLoginModal }) => {
           firebaseUid: user?.user?.uid,
           provider: user?.providerId,
         };
-        const createdUser = await FetchApi({
+        await FetchApi({
           url: "/auth/register",
           data,
           method: "post",
@@ -79,7 +79,7 @@ const RegisterModal = ({ setOpen, setShowLoginModal }) => {
       if (error.code === "auth/email-already-in-use") {
         toast.error("User already exists");
       }
-      setIsLoading(false)
+      setIsLoading(false);
       console.error(error);
     }
   };
@@ -110,6 +110,7 @@ const RegisterModal = ({ setOpen, setShowLoginModal }) => {
       console.log(error);
     }
   };
+ 
   return (
     <Modal
       setOpen={setOpen}
@@ -124,11 +125,11 @@ const RegisterModal = ({ setOpen, setShowLoginModal }) => {
           size={24}
         />
       </div>
-      {
-        isLoading && <div className="py-20 flex items-center w-full">
-          <Loader size="lg" className='mx-auto'/>
+      {isLoading && (
+        <div className="py-20 flex items-center w-full">
+          <Loader size="lg" className="mx-auto" />
         </div>
-      }
+      )}
       {registerScreenIndex === 0 && !isLoading && (
         <div className="p-5 space-y-3">
           <button

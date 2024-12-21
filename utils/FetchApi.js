@@ -1,6 +1,8 @@
-// import { store } from "@/redux/store";
+import { jwtDecode } from "jwt-decode";
+import { store } from "@/redux/store";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { refreshAccessToken } from "./functions";
 
 export const FetchApi = async ({
   method = "get",
@@ -9,16 +11,24 @@ export const FetchApi = async ({
   callback = () => {},
   isToast = "",
 }) => {
+  let token = store.getState().auth?.user?.accessToken;
+
+  if (token) {
+    const decoded = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+    if (decoded.exp < currentTime) {
+      await refreshAccessToken();
+      token = store.getState().auth?.user?.accessToken;
+    }
+  }
   let instance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BASE_API, // Set a base URL for all requests
     headers: {
-      //   Authorization: `Bearer ${
-      //     store.getState().auth?.user?.sanitizedUser?.accessToken || ""
-      //   }`,
+      Authorization: `Bearer ${token || ""}`,
       "Content-Type": "application/json",
     },
+    withCredentials: true,
   });
-
   try {
     let response;
     if (method === "get") {

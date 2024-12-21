@@ -6,7 +6,7 @@ import Button from "./Button";
 import TextInputWithBtn from "./TextInputWithBtn";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAuth } from "@/utils/functions";
+import { deleteAllCookies, useAuth } from "@/utils/functions";
 import { useDispatch } from "react-redux";
 import { setAuth } from "@/redux/slices/AuthSlice";
 import Profile from "./Profile";
@@ -87,6 +87,7 @@ const Navbar = ({
                 className={"!font-normal hidden md:block"}
                 onClick={() => {
                   dispatch(setAuth({}));
+                  deleteAllCookies()
                 }}
               >
                 Logout
