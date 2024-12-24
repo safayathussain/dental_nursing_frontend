@@ -33,6 +33,7 @@ const LoginModal = ({ setOpen, setShowRegisterModal }) => {
 
   const handleGoogleSignin = async () => {
     try {
+      setIsLoading(true);
       const user = await signInWithPopup(auth, googleProvider);
       const { data } = await FetchApi({
         url: `/user/firebaseIdWithToken/${user?.user?.uid}`,
@@ -40,9 +41,10 @@ const LoginModal = ({ setOpen, setShowRegisterModal }) => {
       if (data?.data) {
         dispatch(setAuth(data?.data));
         setOpen(false);
-       
+        setIsLoading(false);
       }
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -61,7 +63,7 @@ const LoginModal = ({ setOpen, setShowRegisterModal }) => {
         const { data } = await FetchApi({
           url: `/user/firebaseIdWithToken/${user?.user?.uid}`,
         });
-        console.log(data)
+        console.log(data);
         if (data?.data) {
           if (!data?.data?.isVerfied) {
             const { data } = await FetchApi({

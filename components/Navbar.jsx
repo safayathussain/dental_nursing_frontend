@@ -4,21 +4,25 @@ import React, { useState } from "react";
 import logo from "@/public/logo.svg";
 import Button from "./Button";
 import TextInputWithBtn from "./TextInputWithBtn";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { deleteAllCookies, useAuth } from "@/utils/functions";
+import { logout, useAuth } from "@/utils/functions";
 import { useDispatch } from "react-redux";
 import { setAuth } from "@/redux/slices/AuthSlice";
 import Profile from "./Profile";
+import { useCookies } from "react-cookie";
+const deleteCookie = (name) => {};
 const Navbar = ({
   setShowAddQuesModal,
   setShowLoginModal,
   setShowRegisterModal,
 }) => {
+
   const router = useRouter();
   const [searchInputValue, setSearchInputValue] = useState("");
   const { auth } = useAuth();
   const dispatch = useDispatch();
+  const search = useSearchParams().get("search");
   return (
     <div className="bg-primary ">
       <div className="container py-7 flex gap-5 justify-between items-center">
@@ -29,11 +33,15 @@ const Navbar = ({
           alt=""
         ></Image>
 
-        <div className="w-full hidden md:block">
+        <div className="w-fit lg:w-full hidden md:block ">
           <TextInputWithBtn
             onClick={() => {
+              if (!searchInputValue) {
+                return;
+              }
               router.push(`/home/questions?search=${searchInputValue}`);
             }}
+            defaultValue={search}
             placeholder={"Search Dental Nursing Guide"}
             onChange={(e) => setSearchInputValue(e.target.value)}
             buttonChild={
@@ -80,15 +88,12 @@ const Navbar = ({
             </>
           ) : (
             <>
-             <Profile imgUrl={auth?.profilePicture}/>
+              <Profile imgUrl={auth?.profilePicture} />
               <div className=""></div>
               <Button
                 variant="primary-outline"
                 className={"!font-normal hidden md:block"}
-                onClick={() => {
-                  dispatch(setAuth({}));
-                  deleteAllCookies()
-                }}
+                onClick={logout}
               >
                 Logout
               </Button>
@@ -97,7 +102,13 @@ const Navbar = ({
           <Button
             variant="primary"
             className={"!font-normal"}
-            onClick={() => setShowAddQuesModal(true)}
+            onClick={() => {
+              if (auth?._id) {
+                setShowAddQuesModal(true);
+              } else {
+                setShowLoginModal(true);
+              }
+            }}
           >
             <div className="flex items-center gap-1 py-[1px]">
               <svg
@@ -122,6 +133,14 @@ const Navbar = ({
       <div className="w-full block md:hidden p-3 pt-0">
         <TextInputWithBtn
           placeholder={"Search Dental Nursing Guide"}
+          onClick={() => {
+            if (!searchInputValue) {
+              return;
+            }
+            router.push(`/home/questions?search=${searchInputValue}`);
+          }}
+          defaultValue={search}
+          onChange={(e) => setSearchInputValue(e.target.value)}
           buttonChild={
             <div>
               <svg

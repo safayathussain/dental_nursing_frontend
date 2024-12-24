@@ -1,9 +1,10 @@
-"use client"
+"use client";
+import { timeAgo } from "@/utils/functions";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const SingleQuestionRecommendation = ({ title }) => {
-  const router = useRouter()
+const SingleQuestionRecommendation = ({ title, questions = [] }) => {
+  const router = useRouter();
   return (
     <div>
       <div className="p-4 rounded-xl border border-secondary-mid space-y-3">
@@ -13,44 +14,31 @@ const SingleQuestionRecommendation = ({ title }) => {
             <hr className="my-3" />
           </>
         )}
-        <div onClick={() => router.push("/home/blogs/1")} className="cursor-pointer p-3 border bg-secondary-low rounded-xl  border-secondary-mid">
-          <p className="text-lightGray text-sm">14 minutes ago</p>
-          <p className="text-primary text-lg font-semibold my-1">
-            Lorem ipsum dolor sit amet consectetur.
-          </p>
-          <div className="flex items-center justify-between">
-            <span></span>
-            <div className="flex items-center gap-5 mt-2 font-medium text-[#4B5563]">
-              <div className="flex items-center gap-1">
-                <img src="/icons/like.svg" alt="" />
-                <p>124</p>
-              </div>
-              <div className="flex items-center gap-1">
-                <img src="/icons/comments.svg" alt="" />
-                <p>124</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div onClick={() => router.push("/home/blogs/1")} className="cursor-pointer p-3 border bg-secondary-low rounded-xl  border-secondary-mid">
-          <p className="text-lightGray text-sm">14 minutes ago</p>
-          <p className="text-primary text-lg font-semibold my-1">
-            Lorem ipsum dolor sit amet consectetur.
-          </p>
-          <div className="flex items-center justify-between">
-            <span></span>
-            <div className="flex items-center gap-5 mt-2 font-medium text-[#4B5563]">
-              <div className="flex items-center gap-1">
-                <img src="/icons/like.svg" alt="" />
-                <p>124</p>
-              </div>
-              <div className="flex items-center gap-1">
-                <img src="/icons/comments.svg" alt="" />
-                <p>124</p>
+        {questions?.map((item, i) => (
+          <div
+            key={i}
+            onClick={() => router.push(`/home/questions/${item?._id}`)}
+            className="cursor-pointer p-3 border bg-secondary-low rounded-xl  border-secondary-mid"
+          >
+            <p className="text-lightGray text-sm">{timeAgo(item?.createdAt)}</p>
+            <p className="text-primary text-lg font-semibold my-1">
+              {item?.title}
+            </p>
+            <div className="flex items-center justify-between">
+              <span></span>
+              <div className="flex items-center gap-5 mt-2 font-medium text-[#4B5563]">
+                <div className="flex items-center gap-1">
+                  <img src="/icons/like.svg" alt="" />
+                  <p>{item?.likedUser?.length}</p>
+                </div>
+                <div className="flex items-center gap-1">
+                  <img src="/icons/comments.svg" alt="" />
+                  <p>{item?.commentsCount}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

@@ -1,13 +1,20 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { useDispatch, useSelector } from "react-redux";
-import { db, storage } from "./firebase";
-import { FetchApi } from "./FetchApi";
+import { useSelector } from "react-redux";
+import { db } from "./firebase";
 import { setAuth } from "@/redux/slices/AuthSlice";
 import { store } from "@/redux/store";
+import { FetchApi } from "./FetchApi";
 export const useAuth = () => {
   const auth = useSelector((state) => state.auth?.user);
   return {
     auth: auth,
+  };
+};
+export const useCategories = () => {
+  const categories = useSelector((state) => state.category?.categories);
+  console.log(categories);
+  return {
+    categories,
   };
 };
 
@@ -32,35 +39,53 @@ export const getUserByEmail = async (email) => {
   }
 };
 
-export const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-  return null;
-};
 export const refreshAccessToken = async () => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API}/auth/refresh-token`,
-    {
-      method: "post",
-      credentials: "include",
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/refresh-token`,
+      {
+        method: "post",
+        credentials: "include",
+      }
+    );
+    if (!res.data?.success) {
+      store.dispatch(setAuth({}));
+      return (window.location.href = window.location.href);
     }
-  );
-  const { data } = await res.json();
-  const auth = store.getState().auth.user;
-  if (data) {
-    store.dispatch(setAuth({ ...auth, accessToken: data }));
+    const { data } = await res.json();
+    const auth = store.getState().auth.user;
+    if (data) {
+      store.dispatch(setAuth({ ...auth, accessToken: data }));
+    }
+  } catch (error) {
+    console.log(error);
+    // store.dispatch(setAuth({}));
+    // window.location.href = window.location.href;
   }
 };
+export const logout = async () => {
+  await FetchApi({ url: "/auth/logout", method: 'post' });
+  store.dispatch(setAuth({}));
+};
 
-function deleteCookie(name) {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+export function timeAgo(postTime) {
+  const now = new Date();
+  const timestamp = new Date(postTime);
+  const diff = now - timestamp; // Difference in milliseconds
+
+  // Calculate time differences
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const months = Math.floor(days / 30); // Approximation
+  const years = Math.floor(days / 365); // Approximation
+
+  // Return the closest meaningful time unit
+  if (seconds < 60) return `1 minute ago`; // Always show 1 minute for less than a minute
+  if (minutes < 60) return `${minutes} minutes ago`;
+  if (hours < 24) return `${hours} hours ago`;
+  if (days < 30) return `${days} days ago`;
+  if (months < 12) return `${months} months ago`;
+  return `${years} years ago`;
 }
-export const deleteAllCookies = () => {
-  const cookies = document.cookie.split(";");
-
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].split("=")[0].trim();
-    deleteCookie(cookie);
-  }
-};

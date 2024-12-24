@@ -1,95 +1,149 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Button from "../../Button";
 import Image from "next/image";
-import profile from "@/public/profile.png";
 import Link from "next/link";
 import sdnBanner from "@/public/images/sdn_ad_banner.png";
 import FeatureBlogs from "./FeatureBlogs";
 import FeatureCourses from "./FeatureCourses";
 import JoinSection from "../common/JoinSection";
 import { useRouter } from "next/navigation";
+import { timeAgo, useCategories } from "@/utils/functions";
+import { FetchApi } from "@/utils/FetchApi";
+import Profile from "@/components/Profile";
+import Pagination from "@/components/Pagination";
+import { Loader } from "rsuite";
 const HomePageQuestions = () => {
-  const router = useRouter()
+  const router = useRouter();
+  const { categories } = useCategories();
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [currentQuestions, setCurrentQuestions] = useState([]);
+  const [currentQuestionPage, setCurrentQuestionPage] = useState(1);
+  const [questionsIsLoading, setQuestionsIsLoading] = useState(false);
+  const [questionCount, setquestionCount] = useState(0);
+  const [isLatest, setIsLatest] = useState(true);
+  const itemsPerPage = 1;
+  useEffect(() => {
+    const loadData = async () => {
+      setQuestionsIsLoading(true);
+      const { data } = await FetchApi({
+        url: `/question/all-questions?page=${currentQuestionPage}&limit=${itemsPerPage}&category=${JSON.stringify(
+          selectedCategory
+        )}&latest=${isLatest}`,
+      });
+      setCurrentQuestions(data.data?.data);
+      setQuestionsIsLoading(false);
+      setquestionCount(data?.data?.totalCount);
+    };
+    loadData();
+  }, [selectedCategory, currentQuestionPage]);
   return (
     <div className=" pt-20 text-sm xl:text-base">
       <div className="container">
         <div className="flex flex-col xl:flex-row gap-8 w-full">
           <div className="xl:w-2/3 w-full">
             <div className="flex gap-2 overflow-x-scroll">
-              <Button variant="primary">Latest</Button>
               <Button
-                variant="secondary"
-                className={
-                  "hover:bg-secondary-low hover:text-primary duration-300 hover:outline-2  hover:outline-secondary-mid"
-                }
+                variant={isLatest ? "primary" : "secondary"}
+                onClick={() => {
+                  setCurrentQuestionPage(1);
+                  setSelectedCategory([]);
+                }}
               >
                 Latest
               </Button>
-              <Button
-                variant="secondary"
-                className={
-                  "hover:bg-secondary-low hover:text-primary duration-300 hover:outline-2 hover:outline-secondary-mid"
-                }
-              >
-                Latest
-              </Button>
-              <Button
-                variant="secondary"
-                className={
-                  "hover:bg-secondary-low hover:text-primary duration-300 hover:outline-2 hover:outline-secondary-mid"
-                }
-              >
-                Latest
-              </Button>
+              {categories.map((item, i) => (
+                <Button
+                  key={i}
+                  variant={
+                    selectedCategory.includes(item?._id)
+                      ? "primary"
+                      : "secondary"
+                  }
+                  onClick={() => {
+                    setIsLatest(false)
+                    setSelectedCategory([item?._id]);
+                    setCurrentQuestionPage(1);
+                  }}
+                >
+                  {item?.name}
+                </Button>
+              ))}
             </div>
             <hr className="my-3" />
-            <div className="max-w-screen w-full overflow-x-scroll whitespace-nowrap md:whitespace-normal">
-              <table className="w-full  space-y-2 ">
-                <tbody className="text-sm xl:text-base">
-                  <tr>
-
-                  <td onClick={() => router.push('/home/questions/1')} className="flex cursor-pointer flex-col lg:flex-row items-start gap-2 lg:gap-7 lg:items-center w-full justify-between bg-secondary-low p-5  rounded-xl border-2 border-secondary-mid">
-                    <div className="flex items-center gap-5 w-full ">
-                      <div className="lg:size-16 rounded-full overflow-hidden min-w-12 lg:min-w-16 size-12 flex items-center justify-center">
-                        <Image
-                          width={100}
-                          height={100}
-                          className="w-full h-full lg:size-16 size-12 object-cover "
-                          src={profile}
-                          alt=""
-                        ></Image>
-                      </div>
-                      <div>
-                        <p className="text-base lg:text-xl text-primary font-semibold">
-                          GCSE biology combined science AQA 2024 GCSE biology
-                          combined science AQA 2024 GCSE biology combined
-                          science AQA 2024
-                        </p>
-                        <p className="text-sm lg:text-base text-secondary">
-                          Webmaster, coding and software dev
-                        </p>
-                      </div>
+            <div className="max-w-screen w-full overflow-x-auto whitespace-nowrap md:whitespace-normal">
+              {questionsIsLoading && (
+                <div className="py-20 flex items-center w-full">
+                  <Loader size="lg" className="mx-auto" />
+                </div>
+              )}
+              {!questionsIsLoading && (
+                <>
+                  <table className="w-full  space-y-2 ">
+                    <tbody className="text-sm xl:text-base  ">
+                      {currentQuestions?.map((question, i) => (
+                        <tr key={i} className=" ">
+                          <td
+                            onClick={() =>
+                              router.push(`/home/questions/${question?._id}`)
+                            }
+                            className="flex my-1 cursor-pointer flex-col md:flex-row items-start gap-2 md:gap-7 md:items-center w-full justify-between bg-secondary-low p-5  rounded-xl border-2 border-secondary-mid"
+                          >
+                            <div className="flex items-center gap-5 w-full ">
+                              <div className="lg:size-16 rounded-full overflow-hidden min-w-12 lg:min-w-16 size-12 flex items-center justify-center">
+                                <Profile
+                                  imgUrl={question.userId.profilePicture}
+                                  className={"!size-14"}
+                                />
+                              </div>
+                              <div>
+                                <p className="text-base lg:text-xl text-primary font-semibold">
+                                  {question?.title}
+                                </p>
+                                <p className="text-sm lg:text-base text-secondary">
+                                  {question?.categories
+                                    ?.map((item) => item.name)
+                                    .join(", ")}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="flex flex-col items-center ml-16 lg:ml-0">
+                              <p className="text-[#4B5563] whitespace-nowrap">
+                                {timeAgo(question?.createdAt)}
+                              </p>
+                              <div className="flex items-center gap-5 mt-2 font-medium text-[#4B5563]">
+                                <div className="flex items-center gap-1">
+                                  <img src="/icons/like.svg" alt="" />
+                                  <p>{question?.likedUser?.length}</p>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <img src="/icons/comments.svg" alt="" />
+                                  <p>{question?.commentsCount}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {currentQuestions?.length === 0 ? (
+                    <p className="mx-auto text-xl font-semibold my-10 text-center">
+                      0 Question Found
+                    </p>
+                  ) : (
+                    <div className="flex justify-end">
+                      <Pagination
+                        totalCount={questionCount}
+                        currentPage={currentQuestionPage}
+                        data={currentQuestions}
+                        itemsPerPage={itemsPerPage}
+                        setCurrentPage={setCurrentQuestionPage}
+                      />
                     </div>
-                    <div className="flex flex-col items-center ml-16 lg:ml-0">
-                      <p className="text-[#4B5563] whitespace-nowrap">
-                        14 minutes ago
-                      </p>
-                      <div className="flex items-center gap-5 mt-2 font-medium text-[#4B5563]">
-                        <div className="flex items-center gap-1">
-                          <img src="/icons/like.svg" alt="" />
-                          <p>124</p>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <img src="/icons/comments.svg" alt="" />
-                          <p>124</p>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  </tr>
-                </tbody>
-              </table>
+                  )}
+                </>
+              )}
             </div>
           </div>
           <div className="w-full flex flex-col sm:flex-row xl:flex-col gap-5 xl:w-1/3">

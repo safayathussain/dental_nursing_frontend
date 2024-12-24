@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import { store } from "@/redux/store";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { refreshAccessToken } from "./functions";
+import { getCookie, refreshAccessToken } from "./functions";
 
 export const FetchApi = async ({
   method = "get",
@@ -12,7 +12,6 @@ export const FetchApi = async ({
   isToast = "",
 }) => {
   let token = store.getState().auth?.user?.accessToken;
-
   if (token) {
     const decoded = jwtDecode(token);
     const currentTime = Date.now() / 1000;

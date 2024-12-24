@@ -86,8 +86,8 @@ const RegisterModal = ({ setOpen, setShowLoginModal }) => {
   const handleGoogleRegister = async () => {
     try {
       const auth = getAuth(app);
+      setIsLoading(true);
       const user = await signInWithPopup(auth, googleProvider);
-      console.log(user);
       if (user?.user?.uid) {
         const data = {
           name: user.user.displayName,
@@ -104,13 +104,15 @@ const RegisterModal = ({ setOpen, setShowLoginModal }) => {
         });
         dispatch(setAuth(createdUser?.data?.data));
         setOpen(false);
+        setIsLoading(false);
       }
       console.log(user);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
- 
+
   return (
     <Modal
       setOpen={setOpen}
