@@ -18,7 +18,7 @@ const Page = () => {
   const [questionCount, setquestionCount] = useState(0);
   const [currentQuestionPage, setCurrentQuestionPage] = useState(1);
   const [questionsIsLoading, setQuestionsIsLoading] = useState(false);
-  const itemsPerPage = 2;
+  const itemsPerPage = 10;
   useEffect(() => {
     const loadData = async () => {
       setQuestionsIsLoading(true);

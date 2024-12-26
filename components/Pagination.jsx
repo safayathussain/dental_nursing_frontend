@@ -2,7 +2,7 @@ import React from "react";
 
 const Pagination = ({
   data = [],
-  itemsPerPage = 5,
+  itemsPerPage = 10,
   currentPage = 1,
   setCurrentPage = () => {},
   totalCount = data.length,

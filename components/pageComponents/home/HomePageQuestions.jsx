@@ -22,7 +22,7 @@ const HomePageQuestions = () => {
   const [questionsIsLoading, setQuestionsIsLoading] = useState(false);
   const [questionCount, setquestionCount] = useState(0);
   const [isLatest, setIsLatest] = useState(true);
-  const itemsPerPage = 1;
+  const itemsPerPage = 10;
   useEffect(() => {
     const loadData = async () => {
       setQuestionsIsLoading(true);

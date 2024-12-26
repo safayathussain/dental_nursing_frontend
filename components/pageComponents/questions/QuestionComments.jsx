@@ -10,6 +10,7 @@ import { BiSolidShare } from "react-icons/bi";
 import toast from "react-hot-toast";
 import { FetchApi } from "@/utils/FetchApi";
 import { timeAgo } from "@/utils/functions";
+import { RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
 
 const ReportIcon = () => (
   <svg
@@ -32,6 +33,7 @@ const ReportIcon = () => (
 
 const Comment = ({
   comment,
+  setComments,
   level = 0,
   replyState,
   auth,
@@ -59,7 +61,71 @@ const Comment = ({
       }
     };
   }, [comment._id, editorRefs]);
+  const [isLiked, setIsLiked] = useState(
+    comment?.likedUser?.includes(auth?._id)
+  );
+  const [likeCount, setLikeCount] = useState(comment?.likedUser?.length || 0);
 
+  const handleLikeQuestion = async () => {
+    if (!auth?._id) {
+      toast.error("You need to login");
+      return;
+    }
+
+    try {
+      const url = isLiked
+        ? `/comment/dislike/${comment?._id}`
+        : `/comment/like/${comment?._id}`;
+
+      const { data } = await FetchApi({
+        url,
+        method: "post",
+      });
+
+      if (data) {
+        setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
+        setIsLiked(!isLiked);
+
+        // Update the parent comments state to reflect the change
+        setComments((prevComments) =>
+          prevComments.map((c) => {
+            if (c._id === comment._id) {
+              return {
+                ...c,
+                likedUser: isLiked
+                  ? c.likedUser.filter((id) => id !== auth._id)
+                  : [...c.likedUser, auth._id],
+              };
+            }
+            // Handle nested comments
+            if (c.children) {
+              return {
+                ...c,
+                children: c.children.map((child) => {
+                  if (child._id === comment._id) {
+                    return {
+                      ...child,
+                      likedUser: isLiked
+                        ? child.likedUser.filter((id) => id !== auth._id)
+                        : [...child.likedUser, auth._id],
+                    };
+                  }
+                  return child;
+                }),
+              };
+            }
+            return c;
+          })
+        );
+      }
+    } catch (error) {
+      console.error("Like error:", error);
+      toast.error("Failed to update like status");
+      // Revert optimistic update if request fails
+      setLikeCount((prev) => (isLiked ? prev + 1 : prev - 1));
+      setIsLiked(!isLiked);
+    }
+  };
   return (
     <div className={`${level > 0 ? "ml-4" : " mt-4"} mt-2`}>
       <div
@@ -97,12 +163,35 @@ const Comment = ({
             }`}
           >
             <div className="flex items-center gap-7">
+              <button
+                onClick={handleLikeQuestion}
+                className="flex text-primary items-center gap-1"
+              >
+                {comment?.likedUser?.includes(auth?._id) ? (
+                  <RiThumbUpFill size={22} />
+                ) : (
+                  <RiThumbUpLine size={22} />
+                )}
+                {comment?.likedUser?.length}
+              </button>
               <p className="flex text-primary items-center gap-1">
-                <LuThumbsUp size={22} /> {comment?.likedUser?.length || 0}
-              </p>
-              <p className="flex text-primary items-center gap-1">
-                <ReportIcon />
-                {comment?.reportedUser?.length || 0}
+                <svg
+                  width="22"
+                  height="23"
+                  viewBox="0 0 26 27"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.57988 26.57L7.05855 26.4363C7.51896 26.3076 7.78789 25.83 7.65924 25.3696L2.18655 5.78498C2.10933 5.50859 1.92547 5.2742 1.67542 5.13338C1.42538 4.99255 1.12963 4.95683 0.853244 5.03407L0.791427 5.05133C0.215852 5.21214 -0.120379 5.8091 0.0404303 6.38468L5.51325 25.9693C5.64191 26.4297 6.11945 26.6987 6.57988 26.57Z"
+                    fill="#3C55A5"
+                  />
+                  <path
+                    d="M25.8521 12.8837C24.1166 12.0183 22.5111 10.9138 21.0825 9.60231C20.9624 9.49239 20.9154 9.32365 20.9614 9.16748C21.6693 6.48957 22.195 3.76679 22.5349 1.01783C22.5887 0.560588 22.3421 0.426105 22.0821 0.739898C16.9807 6.84093 8.15418 -0.376309 2.90039 5.16886C2.96347 5.28696 3.01309 5.41177 3.04832 5.54093L6.59867 18.254C11.8614 12.7761 20.6566 19.9485 25.749 13.8609C26.009 13.5471 26.0583 12.9733 25.8521 12.8837Z"
+                    fill="#3C55A5"
+                  />
+                </svg>
+                {comment?.reportedUser?.length}
               </p>
             </div>
 
@@ -174,6 +263,7 @@ const Comment = ({
               <Comment
                 key={childComment._id || index}
                 comment={childComment}
+                setComments={setComments}
                 level={level + 1}
                 replyState={replyState}
                 auth={auth}
@@ -303,6 +393,7 @@ export const QuestionComments = ({
         <Comment
           key={comment._id || index}
           comment={comment}
+          setComments={setComments}
           replyState={replyState}
           auth={auth}
           onReplyToggle={handleReplyToggle}
