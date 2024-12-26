@@ -8,11 +8,12 @@ import FeatureBlogs from "./FeatureBlogs";
 import FeatureCourses from "./FeatureCourses";
 import JoinSection from "../common/JoinSection";
 import { useRouter } from "next/navigation";
-import { timeAgo, useCategories } from "@/utils/functions";
+import { timeAgo, useAuth, useCategories } from "@/utils/functions";
 import { FetchApi } from "@/utils/FetchApi";
 import Profile from "@/components/Profile";
 import Pagination from "@/components/Pagination";
 import { Loader } from "rsuite";
+import toast from "react-hot-toast";
 const HomePageQuestions = () => {
   const router = useRouter();
   const { categories } = useCategories();
@@ -21,8 +22,11 @@ const HomePageQuestions = () => {
   const [currentQuestionPage, setCurrentQuestionPage] = useState(1);
   const [questionsIsLoading, setQuestionsIsLoading] = useState(false);
   const [questionCount, setquestionCount] = useState(0);
+  const [latestPoll, setLatestPoll] = useState({});
   const [isLatest, setIsLatest] = useState(true);
+  const [selectedPollOption, setSelectedPollOption] = useState(null);
   const itemsPerPage = 10;
+  const { auth } = useAuth();
   useEffect(() => {
     const loadData = async () => {
       setQuestionsIsLoading(true);
@@ -31,12 +35,30 @@ const HomePageQuestions = () => {
           selectedCategory
         )}&latest=${isLatest}`,
       });
+      const { data: pollData } = await FetchApi({
+        url: `/poll/latest-poll`,
+      });
+      setLatestPoll(pollData.data);
       setCurrentQuestions(data.data?.data);
       setQuestionsIsLoading(false);
       setquestionCount(data?.data?.totalCount);
     };
     loadData();
   }, [selectedCategory, currentQuestionPage]);
+  const handleVotePoll = async () => {
+    if (!auth?._id) return toast.error("You need to login");
+    if (!selectedPollOption) return toast.error("Select a option");
+    await FetchApi({
+      url: `/poll/vote`,
+      method: "post",
+      isToast: true,
+      data: {
+        userId: auth?._id,
+        pollId: latestPoll?._id,
+        optionId: selectedPollOption,
+      },
+    });
+  };
   return (
     <div className=" pt-20 text-sm xl:text-base">
       <div className="container">
@@ -61,7 +83,7 @@ const HomePageQuestions = () => {
                       : "secondary"
                   }
                   onClick={() => {
-                    setIsLatest(false)
+                    setIsLatest(false);
                     setSelectedCategory([item?._id]);
                     setCurrentQuestionPage(1);
                   }}
@@ -146,52 +168,62 @@ const HomePageQuestions = () => {
               )}
             </div>
           </div>
-          <div className="w-full flex flex-col sm:flex-row xl:flex-col gap-5 xl:w-1/3">
-            <div className="border border-secondary-mid p-3 rounded-xl w-full sm:w-2/3 xl:w-full">
-              <p className="text-primary text-xl font-semibold">Poll</p>
-              <hr className="my-2" />
-              <div className="p-3 rounded-md bg-secondary-low border-2 border-secondary-mid ">
-                <p className="text-lg text-primary font-semibold">
-                  What are you most excited about this December?
-                </p>
-                <div className="mt-4 space-y-2.5">
-                  <button className="px-5 py-1.5 font-semibold rounded-full border border-secondary text-secondary bg-white w-full text-start">
-                    Holiday Celebrations
-                  </button>
-                  <button className="px-5 py-1.5 font-semibold rounded-full border border-secondary text-secondary bg-white w-full text-start">
-                    Holiday Celebrations
-                  </button>
-                  <button className="px-5 py-1.5 font-semibold rounded-full border border-secondary text-secondary bg-white w-full text-start">
-                    Holiday Celebrations
-                  </button>
-                  <button className="px-5 py-1.5 font-semibold rounded-full border border-secondary text-secondary bg-white w-full text-start">
-                    Holiday Celebrations
-                  </button>
+          {!questionsIsLoading && (
+            <div className="w-full flex flex-col sm:flex-row xl:flex-col gap-5 xl:w-1/3">
+              {!latestPoll?.votedUser?.includes(auth?._id) && (
+                <div className="border border-secondary-mid p-3 rounded-xl w-full sm:w-2/3 xl:w-full">
+                  <p className="text-primary text-xl font-semibold">Poll</p>
+                  <hr className="my-2" />
+                  <div className="p-3 rounded-md bg-secondary-low border-2 border-secondary-mid ">
+                    <p className="text-lg text-primary font-semibold">
+                      {latestPoll?.content}
+                    </p>
+                    <div className="mt-4 space-y-2.5">
+                      {latestPoll?.options?.map((item, i) => (
+                        <button
+                          onClick={() => setSelectedPollOption(item?._id)}
+                          key={i}
+                          className={`px-5 py-1.5 font-semibold duration-100 rounded-full border border-secondary   w-full text-start ${
+                            selectedPollOption === item?._id
+                              ? "bg-secondary text-white"
+                              : "bg-white text-secondary"
+                          }`}
+                        >
+                          {item?.value}
+                        </button>
+                      ))}
+                    </div>
+                    <hr className="my-3" />
+                    <Button
+                      onClick={handleVotePoll}
+                      className={"w-full"}
+                      variant="primary"
+                      size="lg"
+                    >
+                      Vote Now
+                    </Button>
+                    <div className="flex justify-center my-4">
+                      <Link
+                        href={`/home/polls/${latestPoll?._id}`}
+                        className="underline text-primary font-medium "
+                      >
+                        View Discussion
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-                <hr className="my-3" />
-                <Button className={"w-full"} variant="primary" size="lg">
-                  Vote Now
-                </Button>
-                <div className="flex justify-center my-4">
-                  <Link
-                    href={""}
-                    className="underline text-primary font-medium "
-                  >
-                    View Discussion
-                  </Link>
-                </div>
+              )}
+              <div className=" mt-5 w-full sm:w-1/3 xl:w-full">
+                <Image
+                  src={"/images/wizdam_ad_banner.png"}
+                  width={500}
+                  height={500}
+                  alt=""
+                  className="w-full"
+                ></Image>
               </div>
             </div>
-            <div className=" mt-5 w-full sm:w-1/3 xl:w-full">
-              <Image
-                src={"/images/wizdam_ad_banner.png"}
-                width={500}
-                height={500}
-                alt=""
-                className="w-full"
-              ></Image>
-            </div>
-          </div>
+          )}
         </div>
         <div className="my-10">
           <Image src={sdnBanner} alt=""></Image>
