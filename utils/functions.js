@@ -48,23 +48,24 @@ export const refreshAccessToken = async () => {
         credentials: "include",
       }
     );
-    if (!res.data?.success) {
+    const { data } = await res.json();
+    console.log(data);
+    if (!data) {
       store.dispatch(setAuth({}));
       return (window.location.href = window.location.href);
     }
-    const { data } = await res.json();
     const auth = store.getState().auth.user;
     if (data) {
       store.dispatch(setAuth({ ...auth, accessToken: data }));
     }
   } catch (error) {
     console.log(error);
-    // store.dispatch(setAuth({}));
-    // window.location.href = window.location.href;
+    store.dispatch(setAuth({}));
+    window.location.href = window.location.href;
   }
 };
 export const logout = async () => {
-  await FetchApi({ url: "/auth/logout", method: 'post' });
+  await FetchApi({ url: "/auth/logout", method: "post" });
   store.dispatch(setAuth({}));
 };
 

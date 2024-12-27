@@ -102,7 +102,7 @@ const Page = () => {
       },
     });
   };
-  // 
+  //
   return (
     <div className=" ">
       <div className=" py-10 lg:py-20 container">
@@ -185,18 +185,18 @@ const Page = () => {
                     )}
                   </div>
                 </div>
-                  {!commentsIsLoading ? (
-                    <QuestionComments
-                      comments={currentRootComments}
-                      commentsPerPage={commentsPerPage}
-                      currentCommentPage={currentCommentPage}
-                      setComments={setCurrentRootComments}
-                      setCurrentCommentPage={setCurrentCommentPage}
-                      totalComments={totalRootCommentsCount}
-                    />
-                  ) : (
-                    <Loading />
-                  )}
+                {!commentsIsLoading ? (
+                  <QuestionComments
+                    comments={currentRootComments}
+                    commentsPerPage={commentsPerPage}
+                    currentCommentPage={currentCommentPage}
+                    setComments={setCurrentRootComments}
+                    setCurrentCommentPage={setCurrentCommentPage}
+                    totalComments={totalRootCommentsCount}
+                  />
+                ) : (
+                  <Loading />
+                )}
               </>
             ) : (
               <Loading />

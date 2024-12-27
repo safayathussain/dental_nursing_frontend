@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import { store } from "@/redux/store";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { getCookie, refreshAccessToken } from "./functions";
+import { refreshAccessToken } from "./functions";
 
 export const FetchApi = async ({
   method = "get",
