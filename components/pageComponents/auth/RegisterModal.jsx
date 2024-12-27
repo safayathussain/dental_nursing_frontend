@@ -71,8 +71,10 @@ const RegisterModal = ({ setOpen, setShowLoginModal }) => {
           data,
           method: "post",
           isToast: true,
+          callback: () => {
+            setRegisterScreenIndex(1);
+          },
         });
-        setRegisterScreenIndex(1);
         setIsLoading(false);
       }
     } catch (error) {
