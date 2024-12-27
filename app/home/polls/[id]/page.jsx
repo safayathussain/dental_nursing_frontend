@@ -184,6 +184,7 @@ const Page = () => {
                       </div>
                     )}
                   </div>
+                </div>
                   {!commentsIsLoading ? (
                     <QuestionComments
                       comments={currentRootComments}
@@ -196,7 +197,6 @@ const Page = () => {
                   ) : (
                     <Loading />
                   )}
-                </div>
               </>
             ) : (
               <Loading />
