@@ -10,6 +10,7 @@ const TextEditor = ({
   className,
   content = "",
   editor,
+  label,
   setContent = () => {},
 }) => {
   const { auth } = useAuth();
@@ -70,7 +71,9 @@ const TextEditor = ({
   }, [editor]);
 
   return (
-    <JoditEditor
+    <div>
+      <p className="block text-[#4B5563] text-sm mb-0.5">{label}</p>
+      <JoditEditor
       className={`jodit-editor ${className}`}
       ref={editor}
       value={content}
@@ -82,6 +85,7 @@ const TextEditor = ({
         }
       }}
     />
+    </div>
   );
 };
 

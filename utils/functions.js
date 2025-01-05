@@ -90,3 +90,15 @@ export function timeAgo(postTime) {
   if (months < 12) return `${months} months ago`;
   return `${years} years ago`;
 }
+export function formatReadableTime(isoString) {
+  const date = new Date(isoString);
+  const options = {
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  };
+
+  return ` ${date.toLocaleDateString("en-US", options).replace(",", "")}`;
+}

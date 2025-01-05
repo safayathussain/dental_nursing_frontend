@@ -36,7 +36,7 @@ h3 {
 .p-highlight > .p-checkbox-box {
   background-color: #3c55a5 !important;
 }
-.p-radiobutton-input{
+.p-radiobutton-input {
   background-color: #3c55a5 !important;
 }
 input[type="radio"] {
@@ -50,6 +50,40 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked {
-  background-color: #3c55a5 !important; /* Change to your desired active color */
+  background-color: #3c55a5 !important; 
   border-color: #a1a1a1 !important;
+}
+.rs-picker-toggle-active,
+.rs-input-group-focus, .rs-picker {
+  box-shadow: none !important;
+  outline: 0 !important;
+  border-color: #d1d5db !important;
+}
+.rs-picker-toggle:hover {
+  border: 1px solid #d1d5db !important;
+}
+.rs-picker-tag-list {
+  display: flex !important;
+  gap: 5px;
+}
+.rs-tag {
+  background-color: #d1d5db;
+  padding: 0px 5px;
+  border-radius: 3px;
+  display: flex;
+  gap: 5px;
+}
+
+.rs-stack-item {
+  padding: 2px !important;
+}
+.rs-picker-textbox {
+  padding: 5px 0px !important;
+}
+
+.rs-picker-value-count {
+  background-color:#3C55A5 !important ;
+}
+.rs-picker-value-item {
+  color: #3C55A5 !important;
 }
