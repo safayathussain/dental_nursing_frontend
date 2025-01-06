@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { HiMenu } from "react-icons/hi";
 import logo from "@/public/logo.svg";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { logout } from "@/utils/functions";
 import { IoHomeOutline } from "react-icons/io5";
@@ -14,7 +14,7 @@ import { TbCategoryPlus, TbDeviceIpadQuestion } from "react-icons/tb";
 
 const Sidebar = ({ open, setOpen }) => {
   const pathname = usePathname();
-  console.log(pathname);
+  const router = useRouter();
   const items = [
     {
       title: "Dashboard",
@@ -98,7 +98,10 @@ const Sidebar = ({ open, setOpen }) => {
           <div className="">
             <div className="w-full flex justify-center ">
               <button
-                onClick={logout}
+                onClick={() => {
+                  logout();
+                  router.push("/adminSignIn");
+                }}
                 className="rounded-md  border border-error text-error w-full mx-5 py-2 text-sm whitespace-nowrap  font-medium mt-4"
               >
                 Log Out

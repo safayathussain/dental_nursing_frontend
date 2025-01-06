@@ -2,14 +2,20 @@
 import ConfirmModal from "@/components/admin/ConfirmModal";
 import Sidebar from "@/components/admin/Sidebar";
 import { useAuth } from "@/utils/functions";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
 const DashboardLayout = ({ children }) => {
   const [open, setOpen] = useState(false);
   const { auth } = useAuth();
+  const router = useRouter();
+  useEffect(() => {
+    if (auth?.role !== "AD") router.push("/adminSignIn");
+  }, []);
+
   return (
     <div className="min-h-screen">
-      {
+      {auth?.role === "AD" && (
         <>
           <div className="flex items-center bg-primary">
             <Sidebar open={open} setOpen={setOpen} />
@@ -28,7 +34,7 @@ const DashboardLayout = ({ children }) => {
             {/* <ConfirmModal title={"Are you sure"} /> */}
           </div>
         </>
-      }
+      )}
     </div>
   );
 };

@@ -1,12 +1,9 @@
 import React from 'react'
-export const metadata = {
-    layoutHidden: true
 
-  };
-const Page = () => {
+const page = () => {
   return (
-    <div>Page</div>
+    <div></div>
   )
 }
 
-export default Page
+export default page

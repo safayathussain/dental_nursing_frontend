@@ -153,8 +153,8 @@ const RegisterModal = ({ setOpen, setShowLoginModal }) => {
           </div>
           <form className="space-y-1" onSubmit={handleEmailPassRegister}>
             <TextInput label={"Name"} name={"name"} />
-            <TextInput label={"Email"} name={"email"} />
-            <TextInput label={"Password"} name={"pass"} />
+            <TextInput label={"Email"} name={"email"} type="email"/>
+            <TextInput label={"Password"} name={"pass"} type="password"/>
             <div className="pt-2">
               <Button className={"w-full"} variant="primary" type="submit">
                 Continue

@@ -194,8 +194,8 @@ const LoginModal = ({ setOpen, setShowRegisterModal }) => {
             </span>
           </div>
           <form className="space-y-1" onSubmit={handleEmailPassLogin}>
-            <TextInput label={"Email"} name={"email"} />
-            <TextInput label={"Password"} name={"pass"} />
+            <TextInput label={"Email"} name={"email"} type="email"/>
+            <TextInput label={"Password"} name={"pass"} type="password"/>
             <div className="pt-2">
               <Button className={"w-full"} variant="primary" type="submit">
                 Continue
@@ -244,7 +244,7 @@ const LoginModal = ({ setOpen, setShowRegisterModal }) => {
       )}
       {loginScreenIndex === 2 && (
         <form className="p-5" onSubmit={handleSendOtp}>
-          <TextInput label={"Email"} name={"email"} />
+          <TextInput label={"Email"} name={"email"} type="email"/>
           <div className="pt-2">
             <Button className={"w-full"} variant="primary" type="submit">
               Send Otp
@@ -273,7 +273,7 @@ const LoginModal = ({ setOpen, setShowRegisterModal }) => {
       )}
       {loginScreenIndex === 4 && !isLoading && (
         <form className="p-5" onSubmit={handleForgetPassword}>
-          <TextInput label={"New password"} name={"password"} />
+          <TextInput label={"New password"} name={"password"} type="password"/>
           <div className="pt-2">
             <Button className={"w-full"} variant="primary" type="submit">
               Set Password
