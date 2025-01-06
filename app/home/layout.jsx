@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
         const { data: categoriesData } = await FetchApi({
           url: "/category/all-categories",
         });
-        dispatch(setCategories(categoriesData.data));
+        dispatch(setCategories(categoriesData.data?.data));
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }

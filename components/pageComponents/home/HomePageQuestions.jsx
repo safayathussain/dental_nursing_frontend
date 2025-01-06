@@ -74,7 +74,7 @@ const HomePageQuestions = () => {
               >
                 Latest
               </Button>
-              {categories.map((item, i) => (
+              {categories?.map((item, i) => (
                 <Button
                   key={i}
                   variant={

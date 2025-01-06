@@ -10,7 +10,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import { TfiWrite } from "react-icons/tfi";
 import { MdOutlinePoll } from "react-icons/md";
 import { FiUsers } from "react-icons/fi";
-import { TbDeviceIpadQuestion } from "react-icons/tb";
+import { TbCategoryPlus, TbDeviceIpadQuestion } from "react-icons/tb";
 
 const Sidebar = ({ open, setOpen }) => {
   const pathname = usePathname();
@@ -30,6 +30,11 @@ const Sidebar = ({ open, setOpen }) => {
       title: "Polls",
       icon: <MdOutlinePoll size={22} />,
       link: "/admin/polls",
+    },
+    {
+      title: "Categories",
+      icon: <TbCategoryPlus size={22} />,
+      link: "/admin/categories",
     },
     {
       title: "Questions",

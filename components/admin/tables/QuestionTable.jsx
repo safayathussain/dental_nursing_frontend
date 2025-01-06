@@ -6,16 +6,18 @@ import { formatReadableTime } from "@/utils/functions";
 import React, { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import ConfirmModal from "../ConfirmModal";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-const BlogsTable = ({ setCurrentEditBlog, setShowAddBlogForm }) => {
+const QuestionsTable = ({ setCurrentEditQuestion, setShowAddQuestionForm }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [currentBlogs, setCurrentBlogs] = useState([]);
+  const [currentQuestions, setCurrentQuestions] = useState([]);
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
-  const [selectedDeleteBlog, setselectedDeleteBlog] = useState(null);
+  const [selectedDeleteQuestion, setselectedDeleteQuestion] = useState(null);
   const [refetch, setrefetch] = useState(false);
   useEffect(() => {
     setCurrentPage(1);
@@ -24,25 +26,26 @@ const BlogsTable = ({ setCurrentEditBlog, setShowAddBlogForm }) => {
     const loadData = async () => {
       setIsLoading(true);
       const { data } = await FetchApi({
-        url: `/blog/all-blogs?limit=${itemsPerPage}&page=${currentPage}&latest=true&search=${search}`,
+        url: `/question/all-questions?limit=${itemsPerPage}&page=${currentPage}&latest=true&search=${search}`,
       });
-      setCurrentBlogs(data.data?.data);
+      setCurrentQuestions(data.data?.data);
       setTotalCount(data?.data?.totalCount);
       setIsLoading(false);
     };
     loadData();
   }, [currentPage, search, refetch]);
-  const deleteBlog = async () => {
+  const deleteQuestion = async () => {
     const { data } = await FetchApi({
-      url: `/blog/delete-blog/${selectedDeleteBlog}`,
+      url: `/question/delete-question/${selectedDeleteQuestion}`,
       method: "delete",
       isToast: true,
       callback: () => {
-        setselectedDeleteBlog(false);
+        setselectedDeleteQuestion(false);
         setrefetch(!refetch);
       },
     });
   };
+  const router = useRouter();
   return (
     <div className="mt-10">
       <TextInput
@@ -57,36 +60,41 @@ const BlogsTable = ({ setCurrentEditBlog, setShowAddBlogForm }) => {
               <thead>
                 <tr className=" border">
                   <th className=" px-4 py-3 text-left">Title</th>
-                  <th className=" px-4 py-3 text-left">Date</th>
-                  <th className=" px-4 py-3 text-left">Comments</th>
+                  <th className=" px-4 py-3 text-left">User</th>
+                  <th className=" px-4 py-3 text-left">Email</th>
                   <th className=" px-4 py-3 text-left">Categories</th>
+                  <th className=" px-4 py-3 text-left">Liked</th>
+                  <th className=" px-4 py-3 text-left">Comment</th>
+                  <th className=" px-4 py-3 text-left">Date</th>
                   <th className=" px-4 py-3 text-left">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {currentBlogs.map((item) => (
+                {currentQuestions.map((item) => (
                   <tr key={item._id} className="border ">
-                    <td
-                      className=" px-4 py-3 underline whitespace-normal max-w-[500px] min-w-[300px] hover:text-primary duration-100 cursor-pointer"
-                      onClick={() => {
-                        setShowAddBlogForm(true);
-                        setCurrentEditBlog(item);
-                      }}
-                    >
-                      {item.title}
+                    <td className=" px-4 py-3 underline whitespace-normal max-w-[400px]  w-min hover:text-primary duration-100 cursor-pointer">
+                      <Link
+                        href={`/home/questions/${item?._id}`}
+                        target="_blank"
+                      >
+                        {item.title}
+                      </Link>
                     </td>
-                    <td className=" px-4 py-3">
-                      {formatReadableTime(item.createdAt)}
-                    </td>
-                    <td className=" px-4 py-3">{item.commentsCount}</td>
+                    <td className=" px-4 py-3">{item?.userId?.name}</td>
+                    <td className=" px-4 py-3">{item?.userId?.email}</td>
                     <td className=" px-4 py-3">
                       {item?.categories?.map((item) => item?.name).join(", ")}
+                    </td>
+                    <td className=" px-4 py-3">{item.likedUser?.length}</td>
+                    <td className=" px-4 py-3">{item.commentsCount}</td>
+                    <td className=" px-4 py-3">
+                      {formatReadableTime(item.createdAt)}
                     </td>
                     <td className="px-4 py-3 text-center">
                       <button
                         onClick={() => {
                           setdeleteModalOpen(true);
-                          setselectedDeleteBlog(item?._id);
+                          setselectedDeleteQuestion(item?._id);
                         }}
                         className="w-8 h-8 text-lg rounded-full bg-[#ffcbd1] flex items-center justify-center"
                       >
@@ -105,8 +113,8 @@ const BlogsTable = ({ setCurrentEditBlog, setShowAddBlogForm }) => {
           <Loading />
         </div>
       )}
-      {!isLoading && currentBlogs.length === 0 && (
-        <p className="text-xl text-center my-10">0 Blog Found</p>
+      {!isLoading && currentQuestions.length === 0 && (
+        <p className="text-xl text-center my-10">0 Question Found</p>
       )}
       <div className="flex justify-end">
         <Pagination
@@ -120,11 +128,11 @@ const BlogsTable = ({ setCurrentEditBlog, setShowAddBlogForm }) => {
       <ConfirmModal
         open={deleteModalOpen}
         setOpen={setdeleteModalOpen}
-        title={"Are you sure to delete this blog?"}
-        nextFunc={deleteBlog}
+        title={"Are you sure to delete this question?"}
+        nextFunc={deleteQuestion}
       ></ConfirmModal>
     </div>
   );
 };
 
-export default BlogsTable;
+export default QuestionsTable;

@@ -13,12 +13,14 @@ const TextInputWithBtn = ({
   buttonChild = <></>,
   buttonClass = "",
   rounded = "xl",
+  buttonType="",
+  inputRef=null,
   ...etc
 }) => {
   return (
     <div>
       <div>
-        <label htmlFor={id} className="block text-gray-800 font-medium text-sm">
+        <label htmlFor={id} className="block text-[#4B5563] font-medium text-sm">
           {label}
         </label>
         <div className="mt-0.5 flex items-center bg-white p-0.5 rounded-md">
@@ -28,6 +30,7 @@ const TextInputWithBtn = ({
                 onClick(e);
               }
             }}
+            ref={inputRef}
             placeholder={placeholder}
             onChange={onChange}
             id={id}
@@ -40,6 +43,7 @@ const TextInputWithBtn = ({
           <button
             disabled={disableBtn}
             onClick={onClick}
+            type={buttonType}
             className={`border rounded-md p-2 bg-secondary text-sm ${buttonClass}`}
           >
             {buttonChild}

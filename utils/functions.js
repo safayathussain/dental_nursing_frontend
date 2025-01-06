@@ -12,7 +12,6 @@ export const useAuth = () => {
 };
 export const useCategories = () => {
   const categories = useSelector((state) => state.category?.categories);
-  console.log(categories);
   return {
     categories,
   };
@@ -102,3 +101,21 @@ export function formatReadableTime(isoString) {
 
   return ` ${date.toLocaleDateString("en-US", options).replace(",", "")}`;
 }
+
+export const calculateVotePercentages = (options) => {
+  const totalVotes = options.reduce(
+    (total, option) => total + option.voteCount,
+    0
+  );
+
+  const optionsWithPercentages = options.map((option) => {
+    const percentage =
+      totalVotes > 0 ? (option.voteCount / totalVotes) * 100 : 0;
+    return {
+      ...option,
+      percentage: parseFloat(percentage.toFixed(2)),
+    };
+  });
+
+  return optionsWithPercentages;
+};

@@ -25,7 +25,7 @@ const CreateBlogForm = ({ setShowAddBlogForm, data, setData }) => {
       const { data: categoriesData } = await FetchApi({
         url: "/category/all-categories",
       });
-      setAllCategories(categoriesData.data);
+      setAllCategories(categoriesData.data?.data);
     };
     loadData();
   }, []);
