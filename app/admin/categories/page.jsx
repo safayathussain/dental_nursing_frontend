@@ -5,7 +5,7 @@ import Button from "@/components/Button";
 import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 
-const page = () => {
+const Page = () => {
   const [showAddCategoryForm, setShowAddCategoryForm] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(null);
 
@@ -39,4 +39,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -1,9 +1,18 @@
-import React from 'react'
+"use client";
+import UsersTable from "@/components/admin/tables/UsersTable";
+import React  from "react";
 
-const page = () => {
+const Page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <div>
+        <div className="flex items-center justify-between">
+          <p className="text-2xl font-semibold">Users</p>
+        </div>
+        <UsersTable />
+      </div>
+    </div>
+  );
+};
 
-export default page
+export default Page;

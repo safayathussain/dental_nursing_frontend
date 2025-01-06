@@ -1,8 +1,11 @@
 import React from 'react'
+export const metadata = {
+    layoutHidden: true
 
+  };
 const Page = () => {
   return (
-    <div>page</div>
+    <div>Page</div>
   )
 }
 

@@ -9,7 +9,7 @@ import ConfirmModal from "../ConfirmModal";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const QuestionsTable = ({ setCurrentEditQuestion, setShowAddQuestionForm }) => {
+const QuestionsTable = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [currentQuestions, setCurrentQuestions] = useState([]);
@@ -45,7 +45,6 @@ const QuestionsTable = ({ setCurrentEditQuestion, setShowAddQuestionForm }) => {
       },
     });
   };
-  const router = useRouter();
   return (
     <div className="mt-10">
       <TextInput

@@ -6,16 +6,18 @@ import { formatReadableTime } from "@/utils/functions";
 import React, { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import ConfirmModal from "../ConfirmModal";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-const PollsTable = ({ setCurrentEditPoll, setShowAddPollForm }) => {
+const UsersTable = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [currentPolls, setCurrentPolls] = useState([]);
+  const [currentUsers, setCurrentUsers] = useState([]);
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
-  const [selectedDeletePoll, setselectedDeletePoll] = useState(null);
+  const [selectedDeleteQuestion, setselectedDeleteQuestion] = useState(null);
   const [refetch, setrefetch] = useState(false);
   useEffect(() => {
     setCurrentPage(1);
@@ -24,21 +26,21 @@ const PollsTable = ({ setCurrentEditPoll, setShowAddPollForm }) => {
     const loadData = async () => {
       setIsLoading(true);
       const { data } = await FetchApi({
-        url: `/poll/all-polls?limit=${itemsPerPage}&page=${currentPage}&latest=true&search=${search}`,
+        url: `/user/all-users?limit=${itemsPerPage}&page=${currentPage}&latest=true&search=${search}`,
       });
-      setCurrentPolls(data.data?.data);
+      setCurrentUsers(data.data?.data);
       setTotalCount(data?.data?.totalCount);
       setIsLoading(false);
     };
     loadData();
   }, [currentPage, search, refetch]);
-  const deletePoll = async () => {
+  const deleteQuestion = async () => {
     const { data } = await FetchApi({
-      url: `/poll/delete-poll/${selectedDeletePoll}`,
+      url: `/user/delete-user/${selectedDeleteQuestion}`,
       method: "delete",
       isToast: true,
       callback: () => {
-        setselectedDeletePoll(false);
+        setselectedDeleteQuestion(false);
         setrefetch(!refetch);
       },
     });
@@ -47,7 +49,7 @@ const PollsTable = ({ setCurrentEditPoll, setShowAddPollForm }) => {
     <div className="mt-10">
       <TextInput
         onChange={(e) => setSearch(e.target.value)}
-        placeholder={"Search by content"}
+        placeholder={"Search by email"}
         className={"w-max mb-5"}
       />
       <div className="overflow-x-auto text-sm lg:text-base">
@@ -56,39 +58,21 @@ const PollsTable = ({ setCurrentEditPoll, setShowAddPollForm }) => {
             <>
               <thead>
                 <tr className=" border">
-                  <th className=" px-4 py-3 text-left">Content</th>
-                  <th className=" px-4 py-3 text-left">Votes</th>
-                  <th className=" px-4 py-3 text-left">Date</th>
-                  <th className=" px-4 py-3 text-left">Action</th>
+                  <th className=" px-4 py-3 text-left">Name</th>
+                  <th className=" px-4 py-3 text-left">Email</th>
+                  <th className=" px-4 py-3 text-left">Role</th>
+                  <th className=" px-4 py-3 text-left">Registered</th>
                 </tr>
               </thead>
               <tbody>
-                {currentPolls?.map((item) => (
+                {currentUsers.map((item) => (
                   <tr key={item._id} className="border ">
-                    <td
-                      className=" px-4 py-3 underline whitespace-normal max-w-[500px] min-w-[300px] hover:text-primary duration-100 cursor-pointer"
-                      onClick={() => {
-                        setShowAddPollForm(true);
-                        setCurrentEditPoll(item);
-                      }}
-                    >
-                      {item.content}
-                    </td>
-                    <td className=" px-4 py-3">{item?.votedCount}</td>
-                    <td className=" px-4 py-3">
-                      {formatReadableTime(item?.createdAt)}
-                    </td>
+                    <td className=" px-4 py-3">{item?.name}</td>
+                    <td className=" px-4 py-3">{item?.email}</td>
 
-                    <td className="px-4 py-3 text-center">
-                      <button
-                        onClick={() => {
-                          setdeleteModalOpen(true);
-                          setselectedDeletePoll(item?._id);
-                        }}
-                        className="w-8 h-8 text-lg rounded-full bg-[#ffcbd1] flex items-center justify-center"
-                      >
-                        <MdDeleteOutline />
-                      </button>
+                    <td className=" px-4 py-3">{item?.role === 'BU' ? "Basic User" : item?.role === 'AD' && 'Admin'}</td>
+                    <td className=" px-4 py-3">
+                      {formatReadableTime(item.createdAt)}
                     </td>
                   </tr>
                 ))}
@@ -102,8 +86,8 @@ const PollsTable = ({ setCurrentEditPoll, setShowAddPollForm }) => {
           <Loading />
         </div>
       )}
-      {!isLoading && currentPolls?.length === 0 && (
-        <p className="text-xl text-center my-10">0 Poll Found</p>
+      {!isLoading && currentUsers.length === 0 && (
+        <p className="text-xl text-center my-10">0 Question Found</p>
       )}
       <div className="flex justify-end">
         <Pagination
@@ -117,11 +101,11 @@ const PollsTable = ({ setCurrentEditPoll, setShowAddPollForm }) => {
       <ConfirmModal
         open={deleteModalOpen}
         setOpen={setdeleteModalOpen}
-        title={"Are you sure to delete this poll?"}
-        nextFunc={deletePoll}
+        title={"Are you sure to delete this user?"}
+        nextFunc={deleteQuestion}
       ></ConfirmModal>
     </div>
   );
 };
 
-export default PollsTable;
+export default UsersTable;

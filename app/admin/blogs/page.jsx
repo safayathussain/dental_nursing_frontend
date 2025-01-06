@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { BsPlus } from "react-icons/bs";
 import { FaPlus } from "react-icons/fa6";
 
-const page = () => {
+const Page = () => {
   const [showAddBlogForm, setShowAddBlogForm] = useState(false);
   const [currentBlog, setCurrentBlog] = useState(null);
 
@@ -40,4 +40,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

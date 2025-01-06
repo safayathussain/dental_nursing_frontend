@@ -47,7 +47,7 @@ const CategoryTable = ({ setCurrentEditCategory, setShowAddCategoryForm }) => {
     <div className="mt-10">
       <TextInput
         onChange={(e) => setSearch(e.target.value)}
-        placeholder={"Search by title"}
+        placeholder={"Search by name"}
         className={"w-max mb-5"}
       />
       <div className="overflow-x-auto text-sm lg:text-base">
