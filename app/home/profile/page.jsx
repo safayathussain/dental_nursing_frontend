@@ -88,6 +88,9 @@ const Page = () => {
         <Uploader
           fileListVisible={false}
           name="file"
+          headers={{
+            Authorization: `Bearer ${auth?.accessToken}`, 
+          }}
           listType="picture"
           action={`${process.env.NEXT_PUBLIC_BASE_API}/file/upload-files`}
           onUpload={(file) => {
