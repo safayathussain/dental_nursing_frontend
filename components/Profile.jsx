@@ -6,10 +6,14 @@ const Profile = ({ imgUrl, className }) => {
     <>
       {imgUrl ? (
         <Image
-          width={100}
-          height={100}
-          className={`w-10 h-10 rounded-full ${className}`}
-          src={imgUrl}
+          width={200}
+          height={200}
+          className={`w-10 h-10 rounded-full object-cover ${className}`}
+          src={
+            imgUrl.startsWith("http")
+              ? imgUrl
+              : process.env.NEXT_PUBLIC_IMAGE_API_URL + "/" + imgUrl
+          }
           alt=""
         ></Image>
       ) : (

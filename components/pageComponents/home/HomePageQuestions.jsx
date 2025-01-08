@@ -114,7 +114,7 @@ const HomePageQuestions = () => {
                             <div className="flex items-center gap-5 w-full ">
                               <div className="lg:size-16 rounded-full overflow-hidden min-w-12 lg:min-w-16 size-12 flex items-center justify-center">
                                 <Profile
-                                  imgUrl={question.userId.profilePicture}
+                                  imgUrl={question?.userId?.profilePicture}
                                   className={"!size-14"}
                                 />
                               </div>

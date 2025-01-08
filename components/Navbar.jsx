@@ -17,7 +17,6 @@ const Navbar = ({
   setShowLoginModal,
   setShowRegisterModal,
 }) => {
-
   const router = useRouter();
   const [searchInputValue, setSearchInputValue] = useState("");
   const { auth } = useAuth();
@@ -88,7 +87,9 @@ const Navbar = ({
             </>
           ) : (
             <>
-              <Profile imgUrl={auth?.profilePicture} />
+              <Link href={"/home/profile"} className="size-10">
+                <Profile imgUrl={auth?.profilePicture} />
+              </Link>
               <div className=""></div>
               <Button
                 variant="primary-outline"

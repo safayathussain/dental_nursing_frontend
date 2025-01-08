@@ -143,7 +143,7 @@ const RegisterModal = ({ setOpen, setShowLoginModal }) => {
             <div className="bg-white w-max m-0.5 p-2">
               <Image src={googleSvg} alt="" />
             </div>
-            <p className="text-center w-full">Sign in with Google</p>
+            <p className="text-center w-full">Sign up with Google</p>
           </button>
           <div className=" relative">
             <hr className="w-full" />
