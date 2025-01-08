@@ -7,6 +7,7 @@ const nextConfig = {
       "lh3.googleusercontent.com",
       "localhost",
       "localhost:8080",
+      "dentalnursingbackend-production.up.railway.app"
     ], // Add the hostname here
   },
 };
