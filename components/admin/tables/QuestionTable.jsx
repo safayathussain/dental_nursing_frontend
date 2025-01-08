@@ -69,7 +69,7 @@ const QuestionsTable = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentQuestions.map((item) => (
+                {currentQuestions?.map((item) => (
                   <tr key={item._id} className="border ">
                     <td className=" px-4 py-3 underline whitespace-normal max-w-[400px]  w-min hover:text-primary duration-100 cursor-pointer">
                       <Link

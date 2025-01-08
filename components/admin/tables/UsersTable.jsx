@@ -65,7 +65,7 @@ const UsersTable = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentUsers.map((item) => (
+                {currentUsers?.map((item) => (
                   <tr key={item._id} className="border ">
                     <td className=" px-4 py-3">{item?.name}</td>
                     <td className=" px-4 py-3">{item?.email}</td>

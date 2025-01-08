@@ -31,7 +31,7 @@ const TextEditor = ({
         process: function (response) {
           if (response?.data?.files) {
             return {
-              files: response.data.files.map(file => 
+              files: response.data.files?.map(file => 
                 `${process.env.NEXT_PUBLIC_IMAGE_API_URL}/${file?.url}`
               ),
               path: process.env.NEXT_PUBLIC_IMAGE_API_URL,

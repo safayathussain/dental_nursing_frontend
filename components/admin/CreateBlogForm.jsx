@@ -86,7 +86,7 @@ const CreateBlogForm = ({ setShowAddBlogForm, data, setData }) => {
         <TextInput defaultValue={data?.title} label={"Title"} name={"title"} />
         <MultipleSelect
           label={"Categories"}
-          data={allCategories.map((item) => {
+          data={allCategories?.map((item) => {
             return { label: item?.name, value: item?._id };
           })}
           setValue={setSelectedCategories}

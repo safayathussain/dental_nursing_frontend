@@ -72,7 +72,7 @@ const Sidebar = ({ open, setOpen }) => {
         </div>
         <nav className="hs-accordion-group py-6 w-full mt-10 flex flex-col flex-wrap text-white">
           <ul className="space-y-0.5">
-            {items.map((item, i) => (
+            {items?.map((item, i) => (
               <li key={i}>
                 <Link
                   onClick={() => setOpen(false)}

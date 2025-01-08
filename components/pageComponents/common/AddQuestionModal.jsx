@@ -28,7 +28,7 @@ const AddQuestionModal = ({ open, setOpen }) => {
       data: {
         content,
         title,
-        categories: selectedCategories.map((item) => item._id),
+        categories: selectedCategories?.map((item) => item._id),
         userId: auth._id,
       },
       callback: () => {
@@ -57,7 +57,7 @@ const AddQuestionModal = ({ open, setOpen }) => {
           <div>
             <p className="text-[#4B5563] text-sm">Enter post category</p>
             <div className="p-2 rounded-md border mt-0.5 flex items-center flex-wrap gap-2 text-sm md:text-base">
-              {selectedCategories.map((item, i) => (
+              {selectedCategories?.map((item, i) => (
                 <div
                   onClick={() => {
                     const filteredCtg = selectedCategories.filter(

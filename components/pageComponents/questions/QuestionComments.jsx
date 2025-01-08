@@ -88,7 +88,7 @@ const Comment = ({
 
         // Update the parent comments state to reflect the change
         setComments((prevComments) =>
-          prevComments.map((c) => {
+          prevComments?.map((c) => {
             if (c._id === comment._id) {
               return {
                 ...c,
@@ -101,7 +101,7 @@ const Comment = ({
             if (c.children) {
               return {
                 ...c,
-                children: c.children.map((child) => {
+                children: c?.children?.map((child) => {
                   if (child._id === comment._id) {
                     return {
                       ...child,
@@ -259,7 +259,7 @@ const Comment = ({
 
         {comment?.children?.length > 0 && (
           <div className="ml-4">
-            {comment.children.map((childComment, index) => (
+            {comment?.children?.map((childComment, index) => (
               <Comment
                 key={childComment._id || index}
                 comment={childComment}
@@ -325,7 +325,7 @@ export const QuestionComments = ({
     try {
       const { data } = await FetchApi({ url: `/comment/replies/${commentId}` });
       setComments((prevComments) =>
-        prevComments.map((comment) =>
+        prevComments?.map((comment) =>
           comment._id === commentId
             ? { ...comment, children: data?.data || [] }
             : comment
@@ -381,7 +381,7 @@ export const QuestionComments = ({
 
   const removeChildToComment = (parentId) => {
     setComments((prevComments) =>
-      prevComments.map((comment) =>
+      prevComments?.map((comment) =>
         comment._id === parentId ? { ...comment, children: [] } : comment
       )
     );

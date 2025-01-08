@@ -155,7 +155,7 @@ const Page = () => {
             <p className="text-center text-xl">0 Question found</p>
           )}
           {!questionsIsLoading &&
-            questions.map((question, i) => (
+            questions?.map((question, i) => (
               <div
                 key={i}
                 className="flex my-1 cursor-pointer flex-col md:flex-row items-start gap-2 md:gap-7 md:items-center w-full justify-between bg-secondary-low p-5  rounded-xl border-2 border-secondary-mid"

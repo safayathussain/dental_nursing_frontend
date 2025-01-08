@@ -108,7 +108,7 @@ export const calculateVotePercentages = (options) => {
     0
   );
 
-  const optionsWithPercentages = options.map((option) => {
+  const optionsWithPercentages = options?.map((option) => {
     const percentage =
       totalVotes > 0 ? (option.voteCount / totalVotes) * 100 : 0;
     return {
