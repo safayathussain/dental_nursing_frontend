@@ -57,15 +57,19 @@ const Page = () => {
   };
   useEffect(() => {
     const loadData = async () => {
-      setQuestionsIsLoading(true);
-      const { data } = await FetchApi({
-        url: `/question/all-questions?userId=${auth?._id}`,
-      });
-      setQuestions(data.data?.data);
-      setQuestionsIsLoading(false);
+      if (auth?._id) {
+        setQuestionsIsLoading(true);
+        const { data } = await FetchApi({
+          url: `/question/all-questions?userId=${auth?._id || null}`,
+        });
+        setQuestions(data.data?.data);
+        setQuestionsIsLoading(false);
+      }else {
+        router.push('/home')
+      }
     };
     loadData();
-  }, [refetch]);
+  }, [refetch, auth?._id]);
   const deleteQuestion = async () => {
     const { data } = await FetchApi({
       url: `/question/delete-question/${selectedDeleteQuestion}`,
