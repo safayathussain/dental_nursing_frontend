@@ -1,17 +1,20 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "@/public/logo.svg";
 import Button from "./Button";
 import TextInputWithBtn from "./TextInputWithBtn";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { logout, useAuth } from "@/utils/functions";
+import { logout, timeAgo, useAuth } from "@/utils/functions";
 import { useDispatch } from "react-redux";
 import { setAuth } from "@/redux/slices/AuthSlice";
 import Profile from "./Profile";
 import { useCookies } from "react-cookie";
-const deleteCookie = (name) => {};
+import { MdOutlineNotificationsNone } from "react-icons/md";
+import Modal from "./Modal";
+import { BsCheckAll } from "react-icons/bs";
+import { FetchApi } from "@/utils/FetchApi";
 const Navbar = ({
   setShowAddQuesModal,
   setShowLoginModal,
@@ -22,6 +25,49 @@ const Navbar = ({
   const { auth } = useAuth();
   const dispatch = useDispatch();
   const search = useSearchParams().get("search");
+  const [notificationModalOpen, setNotificationModalOpen] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [isAllRead, setIsAllRead] = useState(true);
+  const [refetch, setrefetch] = useState(false);
+  useEffect(() => {
+    const loadData = async () => {
+      if (auth?._id) {
+        const { data } = await FetchApi({
+          url: `/notification/all-notification/${auth?._id}`,
+        });
+        setNotifications(data?.data?.notifications);
+        setIsAllRead(data?.data?.isAllRead);
+      }
+    };
+    loadData();
+  }, [refetch]);
+  const handleMarkAllAsRead = async () => {
+    await FetchApi({
+      url: `/notification/read-all-notification/${auth?._id}`,
+      method: "post",
+      callback: () => {
+        setIsAllRead(true)
+        setNotifications(
+          notifications.map((item) => {
+            return {
+              ...item,
+              readStatus: true,
+            };
+          })
+        );
+      },
+    });
+  };
+  const handleMarkAndRedirect = async (item) => {
+    await FetchApi({
+      url: `/notification/read-notification/${item?._id}`,
+      method: "post",
+      callback: () => {
+        router.push(item?.link);
+        setrefetch(!refetch);
+      },
+    });
+  };
   return (
     <div className="bg-primary ">
       <div className="container py-7 flex gap-5 justify-between items-center">
@@ -90,7 +136,15 @@ const Navbar = ({
               <Link href={"/home/profile"} className="size-10">
                 <Profile imgUrl={auth?.profilePicture} />
               </Link>
-              <div className=""></div>
+              <button
+                onClick={() => setNotificationModalOpen(true)}
+                className=" size-10 rounded-full flex justify-center items-center bg-white relative"
+              >
+                {!isAllRead && (
+                  <div className="absolute size-3 rounded-full bg-red-600 top-0 right-0"></div>
+                )}
+                <MdOutlineNotificationsNone size={20} />
+              </button>
               <Button
                 variant="primary-outline"
                 className={"!font-normal hidden md:block"}
@@ -162,6 +216,44 @@ const Navbar = ({
           }
         />
       </div>
+      {notificationModalOpen && (
+        <Modal
+          setOpen={setNotificationModalOpen}
+          className={
+            "min-w-[300px] max-h-[700px] overflow-x-auto max-w-[500px] w-full"
+          }
+        >
+          <div>
+            <Button
+              onClick={handleMarkAllAsRead}
+              className={"flex text-sm ml-auto items-center gap-1"}
+            >
+              <BsCheckAll size={22} /> Mark all as read
+            </Button>
+          </div>
+          <div className="flex flex-col gap-3">
+            {notifications?.map((item, i) => (
+              <button
+                onClick={() => handleMarkAndRedirect(item)}
+                key={i}
+                className={`p-2 border ${
+                  item?.readStatus
+                    ? "bg-white"
+                    : "bg-secondary-low hover:bg-secondary-mid"
+                } border-secondary-mid  rounded-lg  flex justify-between items-center gap-4`}
+              >
+                <div className="flex items-center gap-4">
+                  <Profile imgUrl={item?.sendBy?.profilePicture} />
+                  <p className="text-left">{item?.content}</p>
+                </div>
+                <p className="text-xs whitespace-nowrap">
+                  {timeAgo(item?.createdAt)}
+                </p>
+              </button>
+            ))}
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };
