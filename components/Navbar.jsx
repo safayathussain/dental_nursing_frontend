@@ -46,7 +46,7 @@ const Navbar = ({
       url: `/notification/read-all-notification/${auth?._id}`,
       method: "post",
       callback: () => {
-        setIsAllRead(true)
+        setIsAllRead(true);
         setNotifications(
           notifications.map((item) => {
             return {
@@ -63,7 +63,9 @@ const Navbar = ({
       url: `/notification/read-notification/${item?._id}`,
       method: "post",
       callback: () => {
-        router.push(item?.link);
+        if (item?.link) {
+          router.push(item?.link);
+        }
         setrefetch(!refetch);
       },
     });
