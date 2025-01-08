@@ -1,8 +1,11 @@
 import React from "react";
 import Button from "../../Button";
+import { scrollToTop, useAuth } from "@/utils/functions";
 
 const JoinSection = () => {
+  const {auth} = useAuth();
   return (
+    !auth?._id &&
     <div className="bg-secondary-mid py-20">
       <div className="container flex flex-col items-center">
         <h1 className="text-4xl md:text-5xl font-bold text-primary text-center max-w-[400px] sm:w-[500px]">
@@ -16,7 +19,7 @@ const JoinSection = () => {
             support.
           </p>
         </div>
-        <Button size="lg">Sign Up Now</Button>
+        <Button size="lg" onClick={scrollToTop}>Sign Up Now</Button>
       </div>
     </div>
   );

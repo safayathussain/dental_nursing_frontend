@@ -119,3 +119,9 @@ export const calculateVotePercentages = (options) => {
 
   return optionsWithPercentages;
 };
+export function scrollToTop() {
+  window.scrollTo({
+    top: 0,       // Scroll to the top
+    behavior: 'smooth', // Smooth scrolling animation
+  });
+}

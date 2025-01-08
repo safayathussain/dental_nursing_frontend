@@ -1,9 +1,10 @@
-"use client"
+"use client";
+import { timeAgo } from "@/utils/functions";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const BlogRecommendation = ({ title }) => {
-  const router = useRouter()
+const BlogRecommendation = ({ title, blogs }) => {
+  const router = useRouter();
   return (
     <div>
       <div className="p-4 rounded-xl border border-secondary-mid space-y-3">
@@ -13,19 +14,18 @@ const BlogRecommendation = ({ title }) => {
             <hr className="my-3" />
           </>
         )}
-
-        <div onClick={() => router.push("/home/blogs/1")} className="cursor-pointer p-3 border bg-primary-low rounded-xl  border-secondary-mid">
-          <p className="text-primary text-lg font-semibold my-1">
-            Lorem ipsum dolor sit amet consectetur.
-          </p>
-          <p className="text-lightGray text-sm">14 minutes ago</p>
-        </div>
-        <div onClick={() => router.push("/home/blogs/1")} className="cursor-pointer p-3 border bg-primary-low rounded-xl  border-secondary-mid">
-          <p className="text-primary text-lg font-semibold my-1">
-            Lorem ipsum dolor sit amet consectetur.
-          </p>
-          <p className="text-lightGray text-sm">14 minutes ago</p>
-        </div>
+        {blogs?.map((item) => (
+          <div
+          key={item?._id}
+            onClick={() => router.push(`/home/blogs/${item?._id}`)}
+            className="cursor-pointer p-3 border bg-primary-low rounded-xl  border-secondary-mid"
+          >
+            <p className="text-primary text-lg font-semibold my-1">
+              {item?.title}
+            </p>
+            <p className="text-lightGray text-sm">{timeAgo(item?.createdAt)}</p>
+          </div>
+        ))} 
       </div>
     </div>
   );

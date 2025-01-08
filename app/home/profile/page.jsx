@@ -86,7 +86,7 @@ const Page = () => {
       <div className="flex flex-col items-center py-20">
         <p className="text-2xl font-semibold">Account Details</p>
         <Uploader
-          className="w-full "
+          className="w-full rs-uploader-picture-center"
           fileListVisible={false}
           name="file"
           headers={{

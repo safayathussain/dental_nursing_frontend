@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import React from "react";
 import logo from "@/public/logo.svg";
@@ -11,6 +12,7 @@ import TextArea from "@/components/TextArea";
 import CheckInput from "@/components/CheckInput";
 import RadioInput from "@/components/RadioInput";
 import JoinSection from "@/components/pageComponents/common/JoinSection";
+import Button from "@/components/Button";
 const Page = () => {
   return (
     <div>
@@ -69,6 +71,7 @@ const Page = () => {
               <RadioInput label={"By email"} name={"contactBy"} />
             </div>
           </div>
+          <Button variant="primary-blue" className={'w-full'}>Submit</Button>
         </div>
       </div>
       <div>

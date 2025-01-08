@@ -9,10 +9,23 @@ import TextEditor from "../textEditor/TextEditor";
 import { FetchApi } from "@/utils/FetchApi";
 import { useAuth } from "@/utils/functions";
 import { useRouter } from "next/navigation";
+import { Loader, Uploader } from "rsuite";
+import Image from "next/image";
+import "rsuite/Uploader/styles/index.css";
 
+function previewFile(file, callback) {
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    callback(reader.result);
+  };
+  reader.readAsDataURL(file);
+}
 const CreateBlogForm = ({ setShowAddBlogForm, data, setData }) => {
   const [content, setContent] = useState(data?.content || "");
   const [allCategories, setAllCategories] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const [fileInfo, setFileInfo] = useState(null);
+  const [uploadedthumbUrl, setuploadedthumbUrl] = useState(data?.thumbnail || "");
   const [selectedCategories, setSelectedCategories] = useState(
     data?.categories?.map((item) => item?._id) || []
   );
@@ -42,6 +55,7 @@ const CreateBlogForm = ({ setShowAddBlogForm, data, setData }) => {
           tags,
           categories: selectedCategories,
           content,
+          thumbnail: uploadedthumbUrl
         },
         callback: () => {
           setShowAddBlogForm(false);
@@ -58,6 +72,7 @@ const CreateBlogForm = ({ setShowAddBlogForm, data, setData }) => {
           tags,
           categories: selectedCategories,
           content,
+          thumbnail: uploadedthumbUrl
         },
         callback: () => {
           setShowAddBlogForm(false);
@@ -83,6 +98,45 @@ const CreateBlogForm = ({ setShowAddBlogForm, data, setData }) => {
         <Button variant="primary-blue">Publish</Button>
       </div>
       <div className="mt-10 space-y-3">
+        <p>Thumbnail</p>
+        <Uploader
+          className="!block "
+          fileListVisible={false}
+          name="file"
+          headers={{
+            Authorization: `Bearer ${auth?.accessToken}`,
+          }}
+          listType="picture"
+          action={`${process.env.NEXT_PUBLIC_BASE_API}/file/upload-files`}
+          onUpload={(file) => {
+            setUploading(true);
+            previewFile(file.blobFile, (value) => {
+              setFileInfo(value);
+            });
+          }}
+          onSuccess={(response, file) => {
+            setUploading(false);
+            setuploadedthumbUrl(response?.data?.files[0]?.url);
+          }}
+          onError={() => {
+            setFileInfo(null);
+            setUploading(false);
+            toast.error("Upload failed");
+          }}
+        >
+          <button
+            type="button"
+            className=""
+            style={{ width: 300, height: 168 }}
+          >
+            {uploading && <Loader backdrop center />}
+            {fileInfo ? (
+              <img src={fileInfo} width="100%" height="100%" />
+            ) : (
+              <Image src={`${process.env.NEXT_PUBLIC_IMAGE_API_URL}/${data?.thumbnail}`} className={"  rounded-sm"} alt="" width={300} height={168}/>
+            )}
+          </button>
+        </Uploader>
         <TextInput defaultValue={data?.title} label={"Title"} name={"title"} />
         <MultipleSelect
           label={"Categories"}

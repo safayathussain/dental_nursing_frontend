@@ -9,10 +9,12 @@ import Profile from "@/components/Profile";
 import { timeAgo } from "@/utils/functions";
 import { Loader } from "rsuite";
 import Pagination from "@/components/Pagination";
+import FeatureBlogs from "@/components/pageComponents/home/FeatureBlogs";
 
 const Page = () => {
   const router = useRouter();
   const search = useSearchParams().get("search");
+  const [blogs, setBlogs] = useState([]);
 
   const [currentQuestions, setCurrentQuestions] = useState([]);
   const [questionCount, setquestionCount] = useState(0);
@@ -25,6 +27,10 @@ const Page = () => {
       const { data } = await FetchApi({
         url: `/question/all-questions?page=${currentQuestionPage}&limit=${itemsPerPage}&search=${search}`,
       });
+      const { data: blogData } = await FetchApi({
+        url: `/blog/all-blogs?page=1&limit=3&isLatest=true`,
+      });
+      setBlogs(blogData?.data?.data);
       setCurrentQuestions(data.data.data);
       setQuestionsIsLoading(false);
       setquestionCount(data.data.totalCount);
@@ -118,30 +124,10 @@ const Page = () => {
               </>
             )}
           </div>
-          <FeatureCourses />
+          {/* <FeatureCourses /> */}
         </div>
         <div className="w-full lg:w-1/4 border h-max rounded-xl p-4">
-          <h1 className="text-[24px] text-primary font-bold">Featured Blogs</h1>
-          <hr className="my-3" />
-          <div>
-            <div
-              onClick={() => router.push("/home/blogs/1")}
-              className="rounded-xl shadow-lg cursor-pointer"
-            >
-              <div className="aspect-w-16 aspect-h-9 overflow-hidden ">
-                <img
-                  src="https://i.ibb.co.com/mJjRm5y/Thumbnail-1.png"
-                  alt=""
-                  className="rounded-t-xl w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-4">
-                <p className="text-xl text-primary font-semibold">
-                  GCSE biology combined science AQA 2024 - Dental Nursing
-                </p>
-              </div>
-            </div>
-          </div>
+          <FeatureBlogs className="!grid-cols-1" blogs={blogs} showViewAllBtn={false} blogClass="!text-lg" />
         </div>
       </div>
     </div>

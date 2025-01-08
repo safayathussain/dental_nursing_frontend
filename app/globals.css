@@ -87,7 +87,7 @@ input[type="radio"]:checked {
 .rs-picker-value-item {
   color: #3C55A5 !important;
 }
-.rs-uploader-picture {
+.rs-uploader-picture-center {
   display: flex !important;
   overflow-x: hidden;
   width: 100vw;
