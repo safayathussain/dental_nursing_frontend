@@ -64,8 +64,8 @@ const Page = () => {
         });
         setQuestions(data.data?.data);
         setQuestionsIsLoading(false);
-      }else {
-        router.push('/home')
+      } else {
+        router.push("/home");
       }
     };
     loadData();
@@ -86,10 +86,11 @@ const Page = () => {
       <div className="flex flex-col items-center py-20">
         <p className="text-2xl font-semibold">Account Details</p>
         <Uploader
+          className="w-full "
           fileListVisible={false}
           name="file"
           headers={{
-            Authorization: `Bearer ${auth?.accessToken}`, 
+            Authorization: `Bearer ${auth?.accessToken}`,
           }}
           listType="picture"
           action={`${process.env.NEXT_PUBLIC_BASE_API}/file/upload-files`}
@@ -109,7 +110,7 @@ const Page = () => {
             toast.error("Upload failed");
           }}
         >
-          <button style={{ width: 100, height: 100 }}>
+          <button className="mx-auto " style={{ width: 100, height: 100 }}>
             {uploading && <Loader backdrop center />}
             {fileInfo ? (
               <img src={fileInfo} width="100%" height="100%" />
