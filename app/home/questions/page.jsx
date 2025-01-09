@@ -1,7 +1,5 @@
 "use client";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import profile from "@/public/profile.png";
 import FeatureCourses from "@/components/pageComponents/home/FeatureCourses";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FetchApi } from "@/utils/FetchApi";
@@ -15,7 +13,6 @@ const Page = () => {
   const router = useRouter();
   const search = useSearchParams().get("search");
   const [blogs, setBlogs] = useState([]);
-
   const [currentQuestions, setCurrentQuestions] = useState([]);
   const [questionCount, setquestionCount] = useState(0);
   const [currentQuestionPage, setCurrentQuestionPage] = useState(1);

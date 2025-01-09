@@ -1,5 +1,4 @@
 "use client";
-import ConfirmModal from "@/components/admin/ConfirmModal";
 import Sidebar from "@/components/admin/Sidebar";
 import { useAuth } from "@/utils/functions";
 import { useRouter } from "next/navigation";
@@ -31,7 +30,6 @@ const DashboardLayout = ({ children }) => {
             onClick={() => setOpen(false)}
           >
             {children}
-            {/* <ConfirmModal title={"Are you sure"} /> */}
           </div>
         </>
       )}

@@ -7,13 +7,20 @@ import { BsFillTelephoneFill } from "react-icons/bs";
 import { RiMapPin2Fill } from "react-icons/ri";
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { useSetting } from "@/utils/functions";
 
 const Footer = () => {
+  const { setting } = useSetting();
+  console.log(setting);
   return (
     <div className="bg-primary text-white">
       <div className="container py-5 flex flex-col items-center">
         <div>
-          <Image src={logo} className="w-[150px] lg:w-[200px] pt-10" alt=""></Image>
+          <Image
+            src={logo}
+            className="w-[150px] lg:w-[200px] pt-10"
+            alt=""
+          ></Image>
         </div>
         <hr className="my-5 w-full opacity-20" />
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -22,13 +29,22 @@ const Footer = () => {
             <Link href={""} className="font-light hover:underline duration-300">
               Home
             </Link>
-            <Link href={"/home/blogs"} className="font-light hover:underline duration-300">
+            <Link
+              href={"/home/blogs"}
+              className="font-light hover:underline duration-300"
+            >
               Blogs
             </Link>
-            <Link href={"/home/aboutUs"} className="font-light hover:underline duration-300">
+            <Link
+              href={"/home/aboutUs"}
+              className="font-light hover:underline duration-300"
+            >
               About Us
             </Link>
-            <Link href={"/home/contactUs"} className="font-light hover:underline duration-300">
+            <Link
+              href={"/home/contactUs"}
+              className="font-light hover:underline duration-300"
+            >
               Contact Us
             </Link>
           </div>
@@ -47,59 +63,59 @@ const Footer = () => {
           <div className="flex flex-col space-y-1 ">
             <p className="font-medium text-xl">Contact</p>
             <Link
-              href={""}
+              href={`mailto:${setting?.email}`}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <IoMail size={20} />
-              info@islandsAI.com
+              {setting?.email}
             </Link>
             <Link
-              href={""}
+              href={`tel:${setting?.phone}`}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <BsFillTelephoneFill />
-              +44 123 456 7890
+              {setting?.phone}
             </Link>
             <Link
               href={""}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <RiMapPin2Fill size={22} />
-              Guernsey, Channel Islands, UK
+              {setting?.location}
             </Link>
           </div>
           <div className="flex flex-col space-y-1 ">
             <p className="font-medium text-xl">Social</p>
             <Link
-              href={""}
+              href={setting?.linkedIn}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <FaLinkedin size={20} />
               LinkedIn
             </Link>
             <Link
-              href={""}
+              href={setting?.twitter}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <FaXTwitter />
               Twitter
             </Link>
             <Link
-              href={""}
+              href={setting?.youtube}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <FaYoutube size={22} />
               Youtube
             </Link>
             <Link
-              href={""}
+              href={setting?.instagram}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <FaInstagram size={22} />
               Instagram
             </Link>
             <Link
-              href={""}
+              href={setting?.facebook}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <FaFacebook size={22} />

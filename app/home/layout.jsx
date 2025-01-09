@@ -5,6 +5,7 @@ import LoginModal from "@/components/pageComponents/auth/LoginModal";
 import RegisterModal from "@/components/pageComponents/auth/RegisterModal";
 import AddQuestionModal from "@/components/pageComponents/common/AddQuestionModal";
 import { setCategories } from "@/redux/slices/CategorySlice";
+import { setSetting } from "@/redux/slices/SettingSlice";
 import { FetchApi } from "@/utils/FetchApi";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -20,6 +21,8 @@ const Layout = ({ children }) => {
         const { data: categoriesData } = await FetchApi({
           url: "/category/all-categories",
         });
+        const { data } = await FetchApi({ url: "/setting/get" });
+        dispatch(setSetting(data?.data));
         dispatch(setCategories(categoriesData.data?.data));
       } catch (error) {
         console.error("Failed to fetch data:", error);

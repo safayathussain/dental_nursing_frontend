@@ -12,6 +12,7 @@ import { MdOutlinePoll } from "react-icons/md";
 import { FiUsers } from "react-icons/fi";
 import { TbCategoryPlus, TbDeviceIpadQuestion } from "react-icons/tb";
 import { LuBookMarked } from "react-icons/lu";
+import { RiSettings3Line } from "react-icons/ri";
 
 const Sidebar = ({ open, setOpen }) => {
   const pathname = usePathname();
@@ -51,6 +52,11 @@ const Sidebar = ({ open, setOpen }) => {
       title: "Users",
       icon: <FiUsers size={18} />,
       link: "/admin/users",
+    },
+    {
+      title: "Setting",
+      icon: <RiSettings3Line size={20} />,
+      link: "/admin/setting",
     },
   ];
   return (

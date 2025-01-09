@@ -16,6 +16,12 @@ export const useCategories = () => {
     categories,
   };
 };
+export const useSetting = () => {
+  const setting = useSelector((state) => state.setting?.setting);
+  return {
+    setting,
+  };
+};
 
 export const getUserByEmail = async (email) => {
   try {
