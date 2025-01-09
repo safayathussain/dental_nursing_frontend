@@ -1,9 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import profile from "@/public/profile.png";
 import { FaChevronRight } from "react-icons/fa6";
-import Image from "next/image";
-import { LuThumbsUp } from "react-icons/lu";
 import Button from "@/components/Button";
 import { BiSolidShare } from "react-icons/bi";
 import SingleQuestionRecommendation from "@/components/pageComponents/questions/SingleQuestionRecommendation";
@@ -116,6 +113,12 @@ const Page = () => {
       callback: () => {
         setShowReplyEditor(false);
         setRootCommentContent("");
+        socket.emit("sendNotification", {
+          sendTo: currentQuestion?.userId?._id,
+          sendBy: auth?._id,
+          content: `${auth?.name} replied to your question`,
+          link: `/home/questions/${id}`,
+        });
       },
     });
     if (data?.data) {
@@ -125,7 +128,6 @@ const Page = () => {
   const [refetchLatest, setrefetchLatest] = useState(false);
   useEffect(() => {
     const loadData = async () => {
-      console.log(currentRootComments[0]?.createdAt);
       if (currentRootComments[0]?.createdAt) {
         const { data } = await FetchApi({
           url: `/comment/latest-root-comments/${id}/${currentRootComments[0]?.createdAt}`,

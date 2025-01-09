@@ -87,35 +87,35 @@ const Footer = () => {
           <div className="flex flex-col space-y-1 ">
             <p className="font-medium text-xl">Social</p>
             <Link
-              href={setting?.linkedIn}
+              href={setting?.linkedIn|| ""}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <FaLinkedin size={20} />
               LinkedIn
             </Link>
             <Link
-              href={setting?.twitter}
+              href={setting?.twitter|| ""}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <FaXTwitter />
               Twitter
             </Link>
             <Link
-              href={setting?.youtube}
+              href={setting?.youtube|| ""}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <FaYoutube size={22} />
               Youtube
             </Link>
             <Link
-              href={setting?.instagram}
+              href={setting?.instagram|| ""}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <FaInstagram size={22} />
               Instagram
             </Link>
             <Link
-              href={setting?.facebook}
+              href={setting?.facebook|| ""}
               className="font-light hover:underline duration-300 flex items-center gap-1"
             >
               <FaFacebook size={22} />

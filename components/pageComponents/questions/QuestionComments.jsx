@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { FetchApi } from "@/utils/FetchApi";
 import { timeAgo } from "@/utils/functions";
 import { RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
+import socket from "@/utils/socket";
 
 const ReportIcon = () => (
   <svg
@@ -225,7 +226,8 @@ const Comment = ({
                   onClick={() =>
                     onReplySubmit(
                       comment.rootCommentId || comment._id,
-                      comment._id
+                      comment._id,
+                      comment
                     )
                   }
                 >
@@ -336,7 +338,7 @@ export const QuestionComments = ({
     }
   };
 
-  const handleReplySubmit = async (rootCommentId, parentId) => {
+  const handleReplySubmit = async (rootCommentId, parentId, comment) => {
     const content = editorContents[parentId];
     if (!content) {
       toast.error("Please enter a reply");
@@ -355,6 +357,14 @@ export const QuestionComments = ({
           userId: auth?._id,
           postType: "Question",
         },
+        callback: () => {
+        }
+      });
+      socket.emit("sendNotification", {
+        sendTo: comment?.userId?._id,
+        sendBy: auth?._id,
+        content: `${auth?.name} replied to your comment`,
+        link: `/home/questions/${id}`,
       });
 
       setReplyState((prev) => ({ ...prev, [parentId]: false }));

@@ -8,13 +8,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { logout, timeAgo, useAuth } from "@/utils/functions";
 import { useDispatch } from "react-redux";
-import { setAuth } from "@/redux/slices/AuthSlice";
 import Profile from "./Profile";
-import { useCookies } from "react-cookie";
 import { MdOutlineNotificationsNone } from "react-icons/md";
 import Modal from "./Modal";
 import { BsCheckAll } from "react-icons/bs";
 import { FetchApi } from "@/utils/FetchApi";
+import socket from "@/utils/socket";
 const Navbar = ({
   setShowAddQuesModal,
   setShowLoginModal,
@@ -27,6 +26,7 @@ const Navbar = ({
   const search = useSearchParams().get("search");
   const [notificationModalOpen, setNotificationModalOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [rootNotifications, setRootNotifications] = useState([]);
   const [isAllRead, setIsAllRead] = useState(true);
   const [refetch, setrefetch] = useState(false);
   useEffect(() => {
@@ -35,12 +35,25 @@ const Navbar = ({
         const { data } = await FetchApi({
           url: `/notification/all-notification/${auth?._id}`,
         });
+
+        setRootNotifications(data?.data?.notifications);
         setNotifications(data?.data?.notifications);
         setIsAllRead(data?.data?.isAllRead);
       }
     };
     loadData();
   }, [refetch]);
+  useEffect(() => {
+    socket.emit("register", auth?._id);
+    socket.on("notification", (notificationRes) => {
+      setNotifications([notificationRes, ...rootNotifications]);
+      setIsAllRead(false);
+    });
+
+    return () => {
+      socket.off("notification");
+    };
+  }, [rootNotifications.length]);
   const handleMarkAllAsRead = async () => {
     await FetchApi({
       url: `/notification/read-all-notification/${auth?._id}`,
@@ -73,13 +86,25 @@ const Navbar = ({
   return (
     <div className="bg-primary ">
       <div className="container py-7 flex gap-5 justify-between items-center">
-        <Image
-          src={logo}
-          className="w-[150px] lg:w-[200px] cursor-pointer"
-          onClick={() => router.push("/home")}
-          alt=""
-        ></Image>
-
+        <Link href={"/home"}>
+          <Image
+            src={logo}
+            className="w-[150px] lg:w-[200px] cursor-pointer"
+            alt=""
+          ></Image>
+        </Link>
+        <button
+          onClick={() => {
+            socket.emit("sendNotification", {
+              sendTo: "6765bd1c1386a386fbf36214",
+              sendBy: "677e08f8e731e65fac3d3548",
+              content: "Hi there",
+              link: "./",
+            });
+          }}
+        >
+          HI
+        </button>
         <div className="w-fit lg:w-full hidden md:block ">
           <TextInputWithBtn
             onClick={() => {
