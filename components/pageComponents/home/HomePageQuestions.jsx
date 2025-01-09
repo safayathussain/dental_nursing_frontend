@@ -27,6 +27,7 @@ const HomePageQuestions = () => {
   const [selectedPollOption, setSelectedPollOption] = useState(null);
   const itemsPerPage = 10;
   const [blogs, setBlogs] = useState([]);
+  const [courses, setCourses] = useState([]);
 
   const { auth } = useAuth();
   useEffect(() => {
@@ -38,9 +39,13 @@ const HomePageQuestions = () => {
         )}&latest=${isLatest}`,
       });
       const { data: blogData } = await FetchApi({
-        url: `/blog/all-blogs?page=1&limit=3&isLatest=true`,
+        url: `/blog/all-blogs?page=1&limit=3&latest=true`,
+      });
+      const { data: courseData } = await FetchApi({
+        url: `/course/all-courses?page=1&limit=3&latest=true`,
       });
       setBlogs(blogData?.data?.data)
+      setCourses(courseData?.data?.data)
       const { data: pollData } = await FetchApi({
         url: `/poll/latest-poll`,
       });
@@ -234,7 +239,7 @@ const HomePageQuestions = () => {
         <div className="my-10">
           <Image src={sdnBanner} alt=""></Image>
         </div>
-        {/* <FeatureCourses /> */}
+        <FeatureCourses courses={courses}/>
         <div className="h-10"></div>
         <FeatureBlogs blogs={blogs} />
       </div>

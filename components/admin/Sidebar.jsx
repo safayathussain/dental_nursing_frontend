@@ -11,6 +11,7 @@ import { TfiWrite } from "react-icons/tfi";
 import { MdOutlinePoll } from "react-icons/md";
 import { FiUsers } from "react-icons/fi";
 import { TbCategoryPlus, TbDeviceIpadQuestion } from "react-icons/tb";
+import { LuBookMarked } from "react-icons/lu";
 
 const Sidebar = ({ open, setOpen }) => {
   const pathname = usePathname();
@@ -40,6 +41,11 @@ const Sidebar = ({ open, setOpen }) => {
       title: "Questions",
       icon: <TbDeviceIpadQuestion size={22} />,
       link: "/admin/questions",
+    },
+    {
+      title: "Courses",
+      icon: <LuBookMarked size={22} />,
+      link: "/admin/courses",
     },
     {
       title: "Users",

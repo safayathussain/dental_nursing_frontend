@@ -6,18 +6,18 @@ import { formatReadableTime } from "@/utils/functions";
 import React, { useEffect, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import ConfirmModal from "../ConfirmModal";
-import { useRouter } from "next/navigation";
+import Button from "@/components/Button";
 import Link from "next/link";
 
-const QuestionsTable = () => {
+const CourseTable = ({ setCurrentEditCourse, setShowAddCourseForm }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [currentQuestions, setCurrentQuestions] = useState([]);
+  const [currentCourses, setCurrentCourses] = useState([]);
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [deleteModalOpen, setdeleteModalOpen] = useState(false);
-  const [selectedDeleteQuestion, setselectedDeleteQuestion] = useState(null);
+  const [selectedDeleteCourse, setselectedDeleteCourse] = useState(null);
   const [refetch, setrefetch] = useState(false);
   useEffect(() => {
     setCurrentPage(1);
@@ -26,22 +26,21 @@ const QuestionsTable = () => {
     const loadData = async () => {
       setIsLoading(true);
       const { data } = await FetchApi({
-        url: `/question/all-questions?limit=${itemsPerPage}&page=${currentPage}&latest=true&search=${search}`,
+        url: `/course/all-courses?limit=${itemsPerPage}&page=${currentPage}&latest=true&search=${search}`,
       });
-      
-      setCurrentQuestions(data.data?.data);
+      setCurrentCourses(data.data?.data);
       setTotalCount(data?.data?.totalCount);
       setIsLoading(false);
     };
     loadData();
   }, [currentPage, search, refetch]);
-  const deleteQuestion = async () => {
+  const deleteCourse = async () => {
     const { data } = await FetchApi({
-      url: `/question/delete-question/${selectedDeleteQuestion}`,
+      url: `/course/delete-course/${selectedDeleteCourse}`,
       method: "delete",
       isToast: true,
       callback: () => {
-        setselectedDeleteQuestion(false);
+        setselectedDeleteCourse(false);
         setrefetch(!refetch);
       },
     });
@@ -59,42 +58,36 @@ const QuestionsTable = () => {
             <>
               <thead>
                 <tr className=" border">
-                  <th className=" px-4 py-3 text-left">Title</th>
-                  <th className=" px-4 py-3 text-left">User</th>
-                  <th className=" px-4 py-3 text-left">Email</th>
-                  <th className=" px-4 py-3 text-left">Categories</th>
-                  <th className=" px-4 py-3 text-left">Liked</th>
-                  <th className=" px-4 py-3 text-left">Comment</th>
+                  <th className=" px-4 py-3 text-left">title</th>
+                  <th className=" px-4 py-3 text-left">Url</th>
                   <th className=" px-4 py-3 text-left">Date</th>
                   <th className=" px-4 py-3 text-left">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {currentQuestions?.map((item) => (
+                {currentCourses?.map((item) => (
                   <tr key={item._id} className="border ">
-                    <td className=" px-4 py-3 underline whitespace-normal max-w-[400px]  w-min hover:text-primary duration-100 cursor-pointer">
-                      <Link
-                        href={`/home/questions/${item?._id}`}
-                        target="_blank"
-                      >
-                        {item.title}
-                      </Link>
+                    <td
+                      className=" px-4 py-3 underline whitespace-normal max-w-[500px] min-w-[300px] hover:text-primary duration-100 cursor-pointer"
+                      onClick={() => {
+                        setShowAddCourseForm(true);
+                        setCurrentEditCourse(item);
+                      }}
+                    >
+                      {item.title}
                     </td>
-                    <td className=" px-4 py-3">{item?.userId?.name}</td>
-                    <td className=" px-4 py-3">{item?.userId?.email}</td>
                     <td className=" px-4 py-3">
-                      {item?.categories?.map((item) => item?.name).join(", ")}
+                      <Link href={item?.url} target="_blank" className="p-2 bg-primary text-white rounded-md">View Course</Link>
                     </td>
-                    <td className=" px-4 py-3">{item.likedUser?.length}</td>
-                    <td className=" px-4 py-3">{item.commentsCount}</td>
                     <td className=" px-4 py-3">
-                      {formatReadableTime(item.createdAt)}
+                      {formatReadableTime(item?.createdAt)}
                     </td>
+
                     <td className="px-4 py-3 text-center">
                       <button
                         onClick={() => {
                           setdeleteModalOpen(true);
-                          setselectedDeleteQuestion(item?._id);
+                          setselectedDeleteCourse(item?._id);
                         }}
                         className="w-8 h-8 text-lg rounded-full bg-[#ffcbd1] flex items-center justify-center"
                       >
@@ -113,8 +106,8 @@ const QuestionsTable = () => {
           <Loading />
         </div>
       )}
-      {!isLoading && currentQuestions.length === 0 && (
-        <p className="text-xl text-center my-10">0 Question Found</p>
+      {!isLoading && currentCourses?.length === 0 && (
+        <p className="text-xl text-center my-10">0 Course Found</p>
       )}
       <div className="flex justify-end">
         <Pagination
@@ -128,11 +121,11 @@ const QuestionsTable = () => {
       <ConfirmModal
         open={deleteModalOpen}
         setOpen={setdeleteModalOpen}
-        title={"Are you sure to delete this question?"}
-        nextFunc={deleteQuestion}
+        title={"Are you sure to delete this course?"}
+        nextFunc={deleteCourse}
       ></ConfirmModal>
     </div>
   );
 };
 
-export default QuestionsTable;
+export default CourseTable;

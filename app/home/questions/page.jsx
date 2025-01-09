@@ -21,6 +21,8 @@ const Page = () => {
   const [currentQuestionPage, setCurrentQuestionPage] = useState(1);
   const [questionsIsLoading, setQuestionsIsLoading] = useState(false);
   const itemsPerPage = 10;
+    const [courses, setCourses] = useState([]);
+  
   useEffect(() => {
     const loadData = async () => {
       setQuestionsIsLoading(true);
@@ -30,7 +32,12 @@ const Page = () => {
       const { data: blogData } = await FetchApi({
         url: `/blog/all-blogs?page=1&limit=3&isLatest=true`,
       });
+      
+            const { data: courseData } = await FetchApi({
+              url: `/course/all-courses?page=1&limit=3&latest=true`,
+            });
       setBlogs(blogData?.data?.data);
+      setCourses(courseData?.data?.data);
       setCurrentQuestions(data.data.data);
       setQuestionsIsLoading(false);
       setquestionCount(data.data.totalCount);
@@ -124,7 +131,7 @@ const Page = () => {
               </>
             )}
           </div>
-          {/* <FeatureCourses /> */}
+          <FeatureCourses courses={courses}/>
         </div>
         <div className="w-full lg:w-1/4 border h-max rounded-xl p-4">
           <FeatureBlogs className="!grid-cols-1" blogs={blogs} showViewAllBtn={false} blogClass="!text-lg" />
