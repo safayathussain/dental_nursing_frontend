@@ -14,6 +14,9 @@ const exo = Exo({
 });
 export const metadata = {
   title: "Dental Nursing Guide",
+  icons: {
+    icon: '/logo.svg'
+  },
   description:
     "A comprehensive guide for dental nurses covering essential skills, patient care, and industry standards to help you excel in your role.",
 };
