@@ -45,7 +45,7 @@ const Page = () => {
 
           dispatch(setAuth(data?.data));
           setIsLoading(false);
-          router.push("/admin/dashboard");
+          router.push("/admin/blogs");
         }
       }
     } catch (error) {

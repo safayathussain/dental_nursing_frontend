@@ -4,7 +4,7 @@ import React from 'react'
 
 const Page = () => {
   const router = useRouter();
-  router.push('/admin/dashboard')
+  router.push('/admin/blogs')
   return (
     <div></div>
   )

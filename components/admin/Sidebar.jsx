@@ -18,11 +18,11 @@ const Sidebar = ({ open, setOpen }) => {
   const pathname = usePathname();
   const router = useRouter();
   const items = [
-    {
-      title: "Dashboard",
-      icon: <IoHomeOutline size={18} />,
-      link: "/admin/dashboard",
-    },
+    // {
+    //   title: "Dashboard",
+    //   icon: <IoHomeOutline size={18} />,
+    //   link: "/admin/dashboard",
+    // },
     {
       title: "Blogs",
       icon: <TfiWrite size={18} />,
