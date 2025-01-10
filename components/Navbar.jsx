@@ -93,18 +93,6 @@ const Navbar = ({
             alt=""
           ></Image>
         </Link>
-        <button
-          onClick={() => {
-            socket.emit("sendNotification", {
-              sendTo: "6765bd1c1386a386fbf36214",
-              sendBy: "677e08f8e731e65fac3d3548",
-              content: "Hi there",
-              link: "./",
-            });
-          }}
-        >
-          HI
-        </button>
         <div className="w-fit lg:w-full hidden md:block ">
           <TextInputWithBtn
             onClick={() => {
