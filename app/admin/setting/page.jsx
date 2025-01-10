@@ -4,7 +4,7 @@ import TextInput from "@/components/TextInput";
 import { FetchApi } from "@/utils/FetchApi";
 import React, { useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const [setting, setSetting] = useState({});
   useEffect(() => {
     const loadData = async () => {
@@ -63,4 +63,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
