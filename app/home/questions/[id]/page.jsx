@@ -241,7 +241,7 @@ const Page = () => {
                           if (auth?._id) {
                             setShowReplyEditor(true);
                           } else {
-                            toast.error("You need to login");
+                            toast.error("Please log in to continue");
                           }
                         }}
                         className={"flex items-center gap-2 !px-3"}

@@ -69,7 +69,7 @@ const Comment = ({
 
   const handleLikeQuestion = async () => {
     if (!auth?._id) {
-      toast.error("You need to login");
+      toast.error("Please log in to continue");
       return;
     }
 
@@ -201,7 +201,7 @@ const Comment = ({
                 onClick={() =>
                   auth?._id
                     ? onReplyToggle(comment._id)
-                    : toast.error("You need to login")
+                    : toast.error("Please log in to continue")
                 }
                 className="flex items-center gap-2 !px-3"
               >
@@ -382,7 +382,7 @@ export const QuestionComments = ({
         }
       }
 
-      toast.success("Reply submitted successfully");
+      toast.success("Your reply has been submitted");
     } catch (error) {
       console.error("Reply submission error:", error);
       toast.error("Failed to submit reply");

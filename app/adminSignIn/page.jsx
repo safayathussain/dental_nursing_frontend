@@ -40,7 +40,7 @@ const Page = () => {
           if (data?.data?.role !== "AD") {
             return toast.error("Invalid credintials");
           } else {
-            toast.success("Login successfull");
+            toast.success("Login successful! Welcome back.");
           }
 
           dispatch(setAuth(data?.data));
@@ -61,7 +61,7 @@ const Page = () => {
     const email = e.target.email.value;
     try {
       await sendPasswordResetEmail(auth, email);
-      toast.success("Check your mail");
+      toast.success("Please check your email for the OTP");
     } catch (error) {
       if (error.code === "auth/invalid-credential") {
         toast.error("Invalid credential");

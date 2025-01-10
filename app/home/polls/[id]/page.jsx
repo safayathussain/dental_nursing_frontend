@@ -89,8 +89,8 @@ const Page = () => {
     loadData();
   }, []);
   const handleVotePoll = async () => {
-    if (!auth?._id) return toast.error("You need to login");
-    if (!selectedPollOption) return toast.error("Select a option");
+    if (!auth?._id) return toast.error("Please log in to continue");
+    if (!selectedPollOption) return toast.error("Please select an option");
     await FetchApi({
       url: `/poll/vote`,
       method: "post",
@@ -128,7 +128,7 @@ const Page = () => {
                             if (!currentPoll?.votedUser?.includes(auth?._id)) {
                               setSelectedPollOption(item?._id);
                             } else {
-                              toast.error("You have voted this poll already");
+                              toast.error("You’ve already voted in this poll");
                             }
                           }}
                           key={i}
@@ -157,7 +157,7 @@ const Page = () => {
                           if (auth?._id) {
                             setShowReplyEditor(true);
                           } else {
-                            toast.error("You need to login");
+                            toast.error("Please log in to continue");
                           }
                         }}
                         className={"flex items-center ml-auto mt-3 gap-2 !px-3"}

@@ -57,8 +57,8 @@ const HomePageQuestions = () => {
     loadData();
   }, [selectedCategory, currentQuestionPage]);
   const handleVotePoll = async () => {
-    if (!auth?._id) return toast.error("You need to login");
-    if (!selectedPollOption) return toast.error("Select a option");
+    if (!auth?._id) return toast.error("Please log in to continue");
+    if (!selectedPollOption) return toast.error("Please select an option");
     await FetchApi({
       url: `/poll/vote`,
       method: "post",
